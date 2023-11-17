@@ -1,0 +1,28 @@
+server:
+  port: 9999
+spring:
+  application:
+    name: config-service
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/chagchagchag/encrypted-properties-spring-cloud-prototype
+        bootstrap: true
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+logging:
+  level:
+    root: debug
+encrypt:
+  key-store:
+    type: jks
+    location: EncryptedConfigServerKey.jks
+    alias: EncryptedConfigServerKey
+    password: asdf1234

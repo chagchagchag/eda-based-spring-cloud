@@ -1,0 +1,19 @@
+services:
+  discovery-server:
+    image: soongoood/discovery-server
+    ports:
+      - "8761:8761"
+    networks:
+      - msa-prototype
+  config-server:
+    image: soongoood/config-server
+    ports:
+      - "9999:9999"
+    networks:
+      - msa-prototype
+  api-gateway:
+    image: soongoood/api-gateway
+    ports:
+      - "8000:8000"
+    networks:
+      - msa-prototype

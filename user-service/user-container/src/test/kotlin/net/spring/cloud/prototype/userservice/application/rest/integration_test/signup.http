@@ -1,0 +1,17 @@
+POST http://localhost:8081/signup
+Content-Type: application/json
+
+{
+  "name": "a1",
+  "email": "a1@gmail.com",
+  "password": 1234
+}
+
+> {%
+    client.test("회원가입 테스트 ", function(){
+        client.log("Response Code >> " + response.status);
+        client.assert(response.status == 200 || response.status == 302, "응답 실패");
+    });
+%}
+
+

@@ -1,0 +1,34 @@
+### 회원가입
+POST http://localhost:8081/signup
+Content-Type: application/json
+
+{
+  "name": "asdf",
+  "email": "asdf@gmail.com",
+  "password": "aaaa"
+}
+
+> {%
+    client.test("회원가입 테스트 ", function(){
+        // client.log("응답 헤더 :: " + response.headers.valuesOf("Aut"));
+    });
+%}
+
+
+### 로그인 테스트
+POST http://localhost:8081/login
+Content-Type: application/json
+
+{
+  "name": "asdf",
+  "email": "asdf@gmail.com",
+  "password": "aaaa"
+}
+
+> {%
+    client.test("회원가입 테스트 ", function(){
+        client.log("Response >> " + response.headers.valueOf("Authorization"));
+    });
+%}
+
+

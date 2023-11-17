@@ -1,0 +1,8 @@
+# curl -H "Content-Type: text/plain; charset=UTF-8" -X POST localhost:9999/encrypt -d hello
+POST localhost:9999/encrypt
+Content-Type: text/plain; charset=UTF-8
+
+hello
+
+###
+

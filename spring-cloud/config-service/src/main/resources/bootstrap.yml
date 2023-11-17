@@ -1,0 +1,7 @@
+encrypt:
+  key-store:
+    location: file:${path.separator}${user.dir}${path.separator}EncryptedConfigServerKey.jks
+    alias: EncryptedConfigServerKey
+    password: asdf1234
+    type: jks
+
