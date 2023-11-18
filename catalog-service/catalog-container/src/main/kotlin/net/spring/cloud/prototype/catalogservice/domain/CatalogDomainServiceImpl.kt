@@ -3,6 +3,7 @@ package net.spring.cloud.prototype.catalogservice.domain
 import com.fasterxml.jackson.databind.ObjectMapper
 import net.spring.cloud.prototype.catalogservice.domain.outbox.entity.CatalogOutboxEntity
 import net.spring.cloud.prototype.catalogservice.domain.outbox.repository.CatalogOutboxRepository
+import net.spring.cloud.prototype.domain.converter.EventConverter
 import net.spring.cloud.prototype.domain.event.OrderCreatedEvent
 import net.spring.cloud.prototype.domain.event.OutboxStatus
 import net.spring.cloud.prototype.domain.event.SagaStatus
@@ -18,7 +19,9 @@ class CatalogDomainServiceImpl (
 ): CatalogDomainService {
 
     @Transactional
-    override fun persistOrderCreatedEvent(orderCreatedEvent: OrderCreatedEvent) {
+    override fun persistOrderCreatedEvent(eventString: String) {
+        val orderCreatedEvent = EventConverter.fromEventString<OrderCreatedEvent>(objectMapper, eventString)
+
         val entity = CatalogOutboxEntity(
             sagaId = orderCreatedEvent.sagaId,
             sagaStatus = SagaStatus.CREATED,
