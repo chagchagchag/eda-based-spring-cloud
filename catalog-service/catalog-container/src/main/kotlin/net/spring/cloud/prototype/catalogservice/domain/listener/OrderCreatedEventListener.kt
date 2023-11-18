@@ -16,8 +16,8 @@ class OrderCreatedEventListener (
     fun listenOrderCreatedEvent(
         messages: List<String>,
     ){
-        messages.forEach {
-            catalogDomainService.persistOrderCreatedEvent(it)
+        messages.forEach { stringMessage ->
+            catalogDomainService.persistOrderCreatedEvent(stringMessage)
         }
     }
 
