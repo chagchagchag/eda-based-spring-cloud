@@ -6,6 +6,7 @@ import net.spring.cloud.prototype.domain.event.SagaStatus
 import net.spring.cloud.prototype.domain.event.OrderCreatedEvent
 import net.spring.cloud.prototype.orderservice.domain.outbox.repository.OrderOutboxRepository
 import net.spring.cloud.prototype.orderservice.domain.publisher.OrderCreatedEventPublisher
+import org.apache.commons.lang.StringUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
@@ -30,31 +31,23 @@ class OrderOutboxHelper (
                 it.sagaStatus = SagaStatus.PROCESSING
                 it
             }
-            .forEach {
-                val event = nullableObjectMapper.readValue<OrderCreatedEvent>(it.payload, OrderCreatedEvent::class.java)
+            .forEach { outboxEntity ->
+                if(outboxEntity.payload == null || StringUtils.isEmpty(outboxEntity.payload))
+                    throw IllegalArgumentException("SagaID 에 대해 outboxEntity 가 비어있습니다.")
 
-                val payload = nullableObjectMapper.writeValueAsString(event)
-                val future = orderCreatedEventPublisher.sendEvent(event.sagaId, payload)
+                val future = orderCreatedEventPublisher.sendEvent(outboxEntity.sagaId, outboxEntity.payload!!)
 
                 future.whenComplete { sendResult, throwable ->
                     if(throwable == null){
                         val metadata = sendResult.recordMetadata
-                        it.outboxStatus = OutboxStatus.FINISHED
-                        it.sagaStatus = SagaStatus.FINISHED
-                        orderOutboxRepository.save(it)
-
-                        logger.info(
-                            "Received successful response from kafka for " +
-                            "Topic :: ${metadata.topic()} " +
-                            "Partition :: ${metadata.partition()} " +
-                            "Offset :: ${metadata.offset()} " +
-                            "Timestamp :: ${metadata.timestamp()}"
-                        )
+                        outboxEntity.outboxStatus = OutboxStatus.FINISHED
+                        outboxEntity.sagaStatus = SagaStatus.FINISHED
+                        orderOutboxRepository.save(outboxEntity)
                     }
                     else{
-                        it.outboxStatus = OutboxStatus.PENDING
-                        it.sagaStatus = SagaStatus.PENDING
-                        orderOutboxRepository.save(it)
+                        outboxEntity.outboxStatus = OutboxStatus.PENDING
+                        outboxEntity.sagaStatus = SagaStatus.PENDING
+                        orderOutboxRepository.save(outboxEntity)
 
                         logger.error("Error while sending " +
                             "message ==> ${sendResult.producerRecord.value()} to topic order-created-event", throwable
