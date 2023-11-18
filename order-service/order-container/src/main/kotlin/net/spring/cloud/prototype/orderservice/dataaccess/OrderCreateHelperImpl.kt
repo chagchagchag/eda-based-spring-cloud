@@ -19,6 +19,6 @@ class OrderCreateHelperImpl(
         val orderDto = orderCommandMapper.toOrderDto(createOrderCommand)
         val orderEntity: OrderEntity = orderDataMapper.toOrderEntity(orderDto)
         val saved = orderJpaRepository.save(orderEntity)
-        return orderDomainService.orderCreatedEvent(createOrderCommand)
+        return orderDomainService.saveOrderCreatedEventAtOutbox(createOrderCommand)
     }
 }

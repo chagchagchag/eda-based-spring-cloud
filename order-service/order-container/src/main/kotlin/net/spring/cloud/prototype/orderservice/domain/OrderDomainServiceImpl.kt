@@ -16,7 +16,7 @@ class OrderDomainServiceImpl (
     val orderOutboxRepository: OrderOutboxRepository,
     @Qualifier("nullableObjectMapper") val objectMapper: ObjectMapper,
 ): OrderDomainService {
-    override fun orderCreatedEvent(command: CreateOrderCommand): OrderCreatedEvent {
+    override fun saveOrderCreatedEventAtOutbox(command: CreateOrderCommand): OrderCreatedEvent {
         val event = OrderCreatedEvent(
             orderId = command.orderId,
             userId = command.userId,
