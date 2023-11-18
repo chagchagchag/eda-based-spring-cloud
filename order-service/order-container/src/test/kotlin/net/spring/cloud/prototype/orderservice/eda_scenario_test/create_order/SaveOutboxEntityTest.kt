@@ -73,7 +73,7 @@ class SaveOutboxEntityTest {
             .thenReturn(orderCreatedEvent)
 
         orderOutboxHelper.insertToOutbox(orderDto, eventType)
-        
+
         Mockito
             .verify(orderOutboxRepository, Mockito.times(1))
             .save(any())
