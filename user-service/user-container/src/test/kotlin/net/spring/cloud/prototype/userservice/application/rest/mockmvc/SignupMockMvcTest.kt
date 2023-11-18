@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import net.spring.cloud.prototype.userservice.application.rest.UsersController
-import net.spring.cloud.prototype.userservice.dataaccess.user.repository.UserJpaRepository
+import net.spring.cloud.prototype.userservice.dataaccess.repository.UserJpaRepository
 import net.spring.cloud.prototype.userservice.application.UserApplicationServiceImpl
 import net.spring.cloud.prototype.userservice.application.UserCreateHelperImpl
 import net.spring.cloud.prototype.userservice.application.UserSagaHelper
