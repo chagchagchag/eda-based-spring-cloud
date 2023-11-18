@@ -10,7 +10,7 @@ class CatalogOutboxScheduler (
 ){
 
     @Scheduled(
-        fixedRateString = "3000",
+        fixedRateString = "1000",
         initialDelayString = "10000",
     )
     fun handleOrderCreatedEvent(){

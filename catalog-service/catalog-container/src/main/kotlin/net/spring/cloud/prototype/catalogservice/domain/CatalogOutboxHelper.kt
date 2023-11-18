@@ -3,9 +3,11 @@ package net.spring.cloud.prototype.catalogservice.domain
 import com.fasterxml.jackson.databind.ObjectMapper
 import net.spring.cloud.prototype.catalogservice.dataaccess.repository.CatalogJpaRepository
 import net.spring.cloud.prototype.catalogservice.domain.outbox.repository.CatalogOutboxRepository
+import net.spring.cloud.prototype.domain.converter.EventConverter
 import net.spring.cloud.prototype.domain.event.OrderCreatedEvent
 import net.spring.cloud.prototype.domain.event.OutboxStatus
 import net.spring.cloud.prototype.domain.event.SagaStatus
+import org.apache.commons.lang.StringUtils
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -28,8 +30,10 @@ class CatalogOutboxHelper (
                 it
             }
             .forEach { outboxEntity ->
-                val orderCreatedEvent = nullableObjectMapper
-                    .readValue<OrderCreatedEvent>(outboxEntity.payload, OrderCreatedEvent::class.java)
+                if(outboxEntity.payload == null || StringUtils.isEmpty(outboxEntity.payload))
+                    throw IllegalArgumentException("SagaID 에 대해 outboxEntity 가 비어있습니다.")
+
+                val orderCreatedEvent = EventConverter.fromEventString<OrderCreatedEvent>(nullableObjectMapper, outboxEntity.payload!!)
 
                 catalogJpaRepository
                     .findByProductId(orderCreatedEvent.productId)
