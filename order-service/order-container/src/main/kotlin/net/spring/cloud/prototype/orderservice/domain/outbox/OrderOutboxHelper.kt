@@ -1,23 +1,18 @@
 package net.spring.cloud.prototype.orderservice.domain.outbox
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import net.spring.cloud.prototype.domain.event.OutboxStatus
 import net.spring.cloud.prototype.domain.event.SagaStatus
-import net.spring.cloud.prototype.domain.event.OrderCreatedEvent
 import net.spring.cloud.prototype.orderservice.domain.outbox.repository.OrderOutboxRepository
 import net.spring.cloud.prototype.orderservice.domain.publisher.OrderCreatedEventPublisher
 import org.apache.commons.lang.StringUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 @Component
 class OrderOutboxHelper (
     val orderOutboxRepository: OrderOutboxRepository,
-    @Qualifier("nullableObjectMapper")
-    val nullableObjectMapper: ObjectMapper,
     val orderCreatedEventPublisher: OrderCreatedEventPublisher,
 ){
     private val logger: Logger = LoggerFactory.getLogger(javaClass)
