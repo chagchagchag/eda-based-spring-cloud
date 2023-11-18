@@ -1,53 +1,53 @@
 services:
-  discovery-service:
-    image: soongoood/discovery-service
+  eda-sample-discovery-service:
+    image: chagchagchag/eda-sample-discovery-service
     ports:
       - "8761:8761"
     networks:
       - msa-prototype
-  config-service:
-    image: soongoood/config-service
+  eda-sample-config-service:
+    image: chagchagchag/eda-sample-config-service
     ports:
       - "9999:9999"
     networks:
       - msa-prototype
-  api-gateway:
-    image: soongoood/api-gateway
+  eda-sample-api-gateway:
+    image: chagchagchag/eda-sample-api-gateway
     environment:
 #      spring,config.import: optional:config-service
-#      spring.cloud.config.uri: http://config-service:9999
-      eureka.client.serviceUrl.defaultZone: http://discovery-service:8761/eureka/
+#      spring.cloud.config.uri: http://eda-sample-config-service:9999
+      eureka.client.serviceUrl.defaultZone: http://eda-sample-discovery-service:8761/eureka/
     ports:
       - "8000:8000"
     networks:
       - msa-prototype
-  user-container:
-    image: soongoood/user-container
+  user-service-container:
+    image: chagchagchag/user-service-container
     environment:
-      spring.cloud.config.uri: http://config-service:9999
+      spring.cloud.config.uri: http://eda-sample-config-service:9999
       # spring.rabbitmq.host: rabbitmq
       # spring.zipkin.base-url: http://zipkin:9411
-      eureka.client.serviceUrl.defaultZone: http://discovery-service:8761/eureka/
+      eureka.client.serviceUrl.defaultZone: http://eda-sample-discovery-service:8761/eureka/
       logging.file: /api-logs/users-ws.log
     networks:
       - msa-prototype
-  order-container:
-    image: soongoood/order-container
+  order-service-container:
+    image: chagchagchag/order-service-container
     environment:
-      spring.cloud.config.uri: http://config-service:9999
+      spring.cloud.config.uri: http://eda-sample-config-service:9999
       # spring.rabbitmq.host: rabbitmq
       # spring.zipkin.base-url: http://zipkin:9411
-      eureka.client.serviceUrl.defaultZone: http://discovery-service:8761/eureka/
+      eureka.client.serviceUrl.defaultZone: http://eda-sample-discovery-service:8761/eureka/
       logging.file: /api-logs/users-ws.log
     networks:
       - msa-prototype
-  catalog-container:
-    image: soongoood/catalog-container
+  catalog-service-container:
+    image: chagchagchag/catalog-service-container
     environment:
-      spring.cloud.config.uri: http://config-service:9999
+      spring.cloud.config.uri: http://eda-sample-config-service:9999
       # spring.rabbitmq.host: rabbitmq
       # spring.zipkin.base-url: http://zipkin:9411
-      eureka.client.serviceUrl.defaultZone: http://discovery-service:8761/eureka/
+      eureka.client.serviceUrl.defaultZone: http://eda-sample-discovery-service:8761/eureka/
       logging.file: /api-logs/users-ws.log
     networks:
       - msa-prototype
