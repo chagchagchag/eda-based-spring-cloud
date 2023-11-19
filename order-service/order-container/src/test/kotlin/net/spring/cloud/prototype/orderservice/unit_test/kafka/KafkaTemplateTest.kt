@@ -2,7 +2,7 @@ package net.spring.cloud.prototype.orderservice.unit_test.kafka
 
 import net.spring.cloud.prototype.domain.event.OrderCreatedEvent
 import net.spring.cloud.prototype.orderservice.fixtures.ObjectMapperFixtures
-import net.spring.cloud.prototype.orderservice.fixtures.OrderCreatedEventFixtures
+import net.spring.cloud.prototype.domain.event.fixtures.OrderCreatedEventFixtures
 import net.spring.cloud.prototype.orderservice.kafka.KafkaStringProducer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

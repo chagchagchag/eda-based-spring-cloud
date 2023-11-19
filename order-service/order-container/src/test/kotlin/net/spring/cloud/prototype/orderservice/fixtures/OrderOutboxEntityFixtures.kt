@@ -5,6 +5,7 @@ import net.spring.cloud.prototype.domain.event.EventType
 import net.spring.cloud.prototype.domain.event.OrderCreatedEvent
 import net.spring.cloud.prototype.domain.event.OutboxStatus
 import net.spring.cloud.prototype.domain.event.SagaStatus
+import net.spring.cloud.prototype.domain.event.fixtures.OrderCreatedEventFixtures
 import net.spring.cloud.prototype.orderservice.domain.outbox.entity.OrderOutboxEntity
 import java.time.ZonedDateTime
 

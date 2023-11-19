@@ -1,4 +1,4 @@
-package net.spring.cloud.prototype.orderservice.fixtures
+package net.spring.cloud.prototype.domain.event.fixtures
 
 import net.spring.cloud.prototype.dataaccess.ulid.UlidCreator
 import net.spring.cloud.prototype.domain.event.OrderCreatedEvent

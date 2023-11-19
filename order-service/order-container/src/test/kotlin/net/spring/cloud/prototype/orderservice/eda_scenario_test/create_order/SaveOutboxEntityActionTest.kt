@@ -5,7 +5,7 @@ import net.spring.cloud.prototype.orderservice.domain.factory.OrderCreatedEventF
 import net.spring.cloud.prototype.orderservice.domain.outbox.OrderOutboxHelper
 import net.spring.cloud.prototype.orderservice.domain.outbox.repository.OrderOutboxRepository
 import net.spring.cloud.prototype.orderservice.domain.publisher.OrderCreatedEventPublisher
-import net.spring.cloud.prototype.orderservice.fixtures.OrderCreatedEventFixtures
+import net.spring.cloud.prototype.domain.event.fixtures.OrderCreatedEventFixtures
 import net.spring.cloud.prototype.orderservice.fixtures.OrderDtoFixtures
 import net.spring.cloud.prototype.orderservice.fixtures.OrderOutboxEntityFixtures
 import org.junit.jupiter.api.DisplayName
