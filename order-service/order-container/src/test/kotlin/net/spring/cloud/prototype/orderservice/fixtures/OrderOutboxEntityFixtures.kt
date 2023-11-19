@@ -1,5 +1,6 @@
 package net.spring.cloud.prototype.orderservice.fixtures
 
+import net.spring.cloud.prototype.dataaccess.ulid.UlidCreator
 import net.spring.cloud.prototype.domain.event.EventType
 import net.spring.cloud.prototype.domain.event.OrderCreatedEvent
 import net.spring.cloud.prototype.domain.event.OutboxStatus
@@ -21,6 +22,24 @@ class OrderOutboxEntityFixtures {
                 eventType = EventType.ORDER_CREATED,
                 payload = objectMapper.writeValueAsString(orderCreatedEvent)
             )
+        }
+
+        fun randomEntity(eventString : String) : OrderOutboxEntity {
+            return OrderOutboxEntity(
+                sagaId = UlidCreator.monotonicUuid(),
+                sagaStatus = SagaStatus.CREATED,
+                outboxStatus = OutboxStatus.CREATED,
+                eventType = EventType.ORDER_CREATED,
+                payload = eventString
+            )
+        }
+
+        fun randomCreatedEntityList5() : List<OrderOutboxEntity>{
+            val objectMapper = ObjectMapperFixtures.nullableObjectMapper()
+            return OrderCreatedEventFixtures
+                .randomEventList5()
+                .map{ orderCreatedEvent -> fromOrderCreatedEvent(orderCreatedEvent) }
+                .map{ orderOutboxEntity -> randomEntity(objectMapper.writeValueAsString(orderOutboxEntity)) }
         }
     }
 

@@ -31,5 +31,15 @@ class OrderCreatedEventFixtures {
                 createdAt = LocalDate.now(),
             )
         }
+
+        fun randomEventList5() : List<OrderCreatedEvent> {
+            return listOf(
+                randomNewOrderCreatedEvent(),
+                randomNewOrderCreatedEvent(),
+                randomNewOrderCreatedEvent(),
+                randomNewOrderCreatedEvent(),
+                randomNewOrderCreatedEvent(),
+            )
+        }
     }
 }

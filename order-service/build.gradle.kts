@@ -52,6 +52,8 @@ allprojects{
         testImplementation("org.springframework.kafka:spring-kafka-test")
         testImplementation("org.testcontainers:junit-jupiter")
         testImplementation("org.testcontainers:kafka")
+        testImplementation("org.testcontainers:mysql")
+        runtimeOnly("com.mysql:mysql-connector-j")
     }
 
     dependencyManagement {
