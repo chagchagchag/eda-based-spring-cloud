@@ -16,10 +16,9 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.any
-import org.springframework.boot.test.mock.mockito.MockBean
 
 @ExtendWith(MockitoExtension::class)
-class SaveOutboxEntityTest {
+class SaveOutboxEntityActionTest {
 
     @Mock
     private lateinit var orderOutboxRepository: OrderOutboxRepository

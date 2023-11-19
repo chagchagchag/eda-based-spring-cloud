@@ -17,7 +17,7 @@ import org.mockito.Mockito
 import org.mockito.junit.jupiter.MockitoExtension
 
 @ExtendWith(MockitoExtension::class)
-class ScheduleSendingSagaMessageTest {
+class ScheduledPublishingActionTest {
 
     /**
      * OrderOutboxScheduler 는 주기적으로 OrderOutboxHelper 를 통해 publishOrderCreatedEvent() 를 호출한다.
