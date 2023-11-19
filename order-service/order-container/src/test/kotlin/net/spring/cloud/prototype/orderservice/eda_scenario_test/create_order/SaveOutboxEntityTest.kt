@@ -34,11 +34,13 @@ class SaveOutboxEntityTest {
     private lateinit var orderOutboxHelper: OrderOutboxHelper
 
     @Test
-    @DisplayName("OrderOutboxRepository::save() 메서드 정상호출 ?")
-    fun `OrderOutboxRepository 를 통해 save() 메서드 호출을 정상적으로 하는지 검증`(){
+    @DisplayName("OrderOutboxRepository::save() 메서드 정상호출 확인")
+    fun `(OrderOutboxHelper) insertToOutbox 메서드 검증 - OrderOutboxEntity 저장`(){
         val orderDto = OrderDtoFixtures.whenOrderCreated()
         val eventType = EventType.ORDER_CREATED
-        val orderCreatedEvent = OrderCreatedEventFixtures.fromOrderDto(orderDto)
+
+        val orderCreatedEvent = OrderCreatedEventFixtures
+            .fromOrderDto(orderDto)
         val orderOutboxEntity = OrderOutboxEntityFixtures
             .fromOrderCreatedEvent(orderCreatedEvent)
 
@@ -55,11 +57,6 @@ class SaveOutboxEntityTest {
         Mockito
             .verify(orderOutboxRepository, Mockito.times(1))
             .save(any())
-    }
-
-    @Test
-    fun `OrderCreatedEvent 객체에 대해서 OrderOutboxRepository 에 OrderOutboxEntity 가 저장되는지 검증한다`(){
-
     }
 
 }

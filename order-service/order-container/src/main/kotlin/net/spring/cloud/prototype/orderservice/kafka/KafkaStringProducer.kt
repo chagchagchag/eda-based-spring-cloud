@@ -6,15 +6,13 @@ import org.springframework.stereotype.Component
 import java.util.concurrent.CompletableFuture
 
 @Component
-class KafkaStringProducer (
+class KafkaStringProducer(
     val kafkaTemplate: KafkaTemplate<String, String>,
-    val objectMapperUtils: ObjectMapperUtils,
 ){
 
-    fun <T> send(topicName: String, key: String, value: T)
+    fun send(topicName: String, key: String, value: String)
     : CompletableFuture<SendResult<String, String>> {
-        val serialized = objectMapperUtils.serializeObject(value)
-        return kafkaTemplate.send(topicName, key, serialized)
+        return kafkaTemplate.send(topicName, key, value)
     }
 
 }
