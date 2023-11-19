@@ -32,7 +32,7 @@ class OrderOutboxHelper (
                 it
             }
             .forEach { outboxEntity ->
-                if(outboxEntity.payload == null || StringUtils.isEmpty(outboxEntity.payload))
+                if(outboxEntity.payload == null || outboxEntity.payload!!.isBlank())
                     throw IllegalArgumentException("SagaID 에 대해 outboxEntity 가 비어있습니다.")
 
                 val future = orderCreatedEventPublisher.sendEvent(outboxEntity.sagaId, outboxEntity.payload!!)

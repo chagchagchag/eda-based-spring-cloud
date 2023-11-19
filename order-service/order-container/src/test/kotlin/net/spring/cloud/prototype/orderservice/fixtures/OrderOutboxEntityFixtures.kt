@@ -12,7 +12,7 @@ class OrderOutboxEntityFixtures {
 
     companion object{
         fun fromOrderCreatedEvent(orderCreatedEvent: OrderCreatedEvent)
-        : OrderOutboxEntity{
+        : OrderOutboxEntity {
             val objectMapper = ObjectMapperFixtures.nullableObjectMapper()
             return OrderOutboxEntity(
                 createdAt = ZonedDateTime.now(),
@@ -21,6 +21,30 @@ class OrderOutboxEntityFixtures {
                 outboxStatus = OutboxStatus.CREATED,
                 eventType = EventType.ORDER_CREATED,
                 payload = objectMapper.writeValueAsString(orderCreatedEvent)
+            )
+        }
+
+        fun fromNullOrderCreatedEvent()
+        : OrderOutboxEntity {
+            return OrderOutboxEntity(
+                createdAt = ZonedDateTime.now(),
+                sagaId = UlidCreator.monotonicUuid(),
+                sagaStatus = SagaStatus.CREATED,
+                outboxStatus = OutboxStatus.CREATED,
+                eventType = EventType.ORDER_CREATED,
+                payload = null,
+            )
+        }
+
+        fun fromEmptyStringOrderCreatedEvent()
+        : OrderOutboxEntity {
+            return OrderOutboxEntity(
+                createdAt = ZonedDateTime.now(),
+                sagaId = UlidCreator.monotonicUuid(),
+                sagaStatus = SagaStatus.CREATED,
+                outboxStatus = OutboxStatus.CREATED,
+                eventType = EventType.ORDER_CREATED,
+                payload = "  ",
             )
         }
 
@@ -35,11 +59,21 @@ class OrderOutboxEntityFixtures {
         }
 
         fun randomCreatedEntityList5() : List<OrderOutboxEntity>{
-            val objectMapper = ObjectMapperFixtures.nullableObjectMapper()
             return OrderCreatedEventFixtures
                 .randomEventList5()
                 .map{ orderCreatedEvent -> fromOrderCreatedEvent(orderCreatedEvent) }
-                .map{ orderOutboxEntity -> randomEntity(objectMapper.writeValueAsString(orderOutboxEntity)) }
+        }
+
+        fun randomNullPayloadEntityList5() : List<OrderOutboxEntity> {
+            return OrderCreatedEventFixtures
+                .randomEventList5()
+                .map{ orderCreatedEvent -> fromNullOrderCreatedEvent() }
+        }
+
+        fun randomEmptyStringPayloadEntityList5() : List<OrderOutboxEntity> {
+            return OrderCreatedEventFixtures
+                .randomEventList5()
+                .map { orderCreatedEvent ->  fromEmptyStringOrderCreatedEvent()}
         }
     }
 
