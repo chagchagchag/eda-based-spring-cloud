@@ -1,5 +1,6 @@
 package net.spring.cloud.prototype.orderservice.dataaccess
 
+import net.spring.cloud.prototype.domain.event.EventType
 import net.spring.cloud.prototype.domain.event.OrderCreatedEvent
 import net.spring.cloud.prototype.orderservice.application.mapper.OrderCommandMapper
 import net.spring.cloud.prototype.orderservice.application.mapper.OrderDataMapper
@@ -19,6 +20,6 @@ class OrderCreateHelperImpl(
         val orderDto = orderCommandMapper.toOrderDto(createOrderCommand)
         val orderEntity: OrderEntity = orderDataMapper.toOrderEntity(orderDto)
         val saved = orderJpaRepository.save(orderEntity)
-        return orderDomainService.saveOrderCreatedEventAtOutbox(createOrderCommand)
+        return orderDomainService.insertToOutbox(orderDto, EventType.ORDER_CREATED)
     }
 }

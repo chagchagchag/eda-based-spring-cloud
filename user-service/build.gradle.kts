@@ -37,6 +37,8 @@ allprojects{
     }
 
     dependencies {
+        api(project(":common:common-dataaccess"))
+        api(project(":common:common-domain"))
 //        implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")
 //        implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 //        implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
@@ -45,8 +47,6 @@ allprojects{
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.0")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("org.mockito.kotlin:mockito-kotlin:5.0.0")
-        api(project(":common:common-dataaccess"))
-        api(project(":common:common-domain"))
     }
 
     dependencyManagement {

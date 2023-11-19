@@ -12,9 +12,9 @@ class OrderCreatedEventPublisher (
     val orderServiceProperties: OrderServiceProperties,
     val kafkaStringProducer: KafkaStringProducer,
 ){
-    fun sendEvent(sagaId: UUID, eventString : String)
+    fun sendEvent(sagaId: UUID, event: String)
     : CompletableFuture<SendResult<String, String>> {
         val topicName = orderServiceProperties.orderCreatedEventTopicName
-        return kafkaStringProducer.send(topicName, sagaId.toString(), eventString)
+        return kafkaStringProducer.send(topicName, sagaId.toString(), event)
     }
 }

@@ -12,8 +12,6 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    implementation("org.springframework.kafka:spring-kafka")
-    testImplementation("org.springframework.kafka:spring-kafka-test")
 }
 
 tasks.getByName("bootJar"){

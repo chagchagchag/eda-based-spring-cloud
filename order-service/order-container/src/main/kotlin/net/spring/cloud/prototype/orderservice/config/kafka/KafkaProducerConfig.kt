@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.kafka.core.DefaultKafkaProducerFactory
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.kafka.core.ProducerFactory
+import org.springframework.kafka.support.serializer.JsonSerializer
 import java.io.Serializable
 
 @Configuration
@@ -35,6 +36,19 @@ class KafkaProducerConfig (
             ProducerConfig.BOOTSTRAP_SERVERS_CONFIG to BOOTSTRAP_SERVERS,
             ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG to StringSerializer::class.java,
             ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG to StringSerializer::class.java
+        )
+    }
+
+//    @Bean
+    fun <T> objectKafkaTemplate() : KafkaTemplate<String, T>{
+        return KafkaTemplate(DefaultKafkaProducerFactory<String, T>(jsonSerializerProducerConfig()))
+    }
+
+    fun jsonSerializerProducerConfig() : Map<String, Serializable>{
+        return mapOf<String, Serializable> (
+            ProducerConfig.BOOTSTRAP_SERVERS_CONFIG to BOOTSTRAP_SERVERS,
+            ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG to StringSerializer::class.java,
+            ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG to JsonSerializer::class.java,
         )
     }
 

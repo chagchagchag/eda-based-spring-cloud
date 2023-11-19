@@ -10,6 +10,7 @@ plugins {
 }
 
 extra["springCloudVersion"] = "2022.0.4"
+extra["testcontainersVersion"] = "1.18.3"
 
 subprojects{
     apply(plugin = "org.jetbrains.kotlin.jvm")
@@ -38,18 +39,27 @@ allprojects{
     }
 
     dependencies {
+        api(project(":common:common-dataaccess"))
+        api(project(":common:common-domain"))
         implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")
         implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
         implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
         implementation("org.springframework.boot:spring-boot-starter-data-jpa")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
-        api(project(":common:common-dataaccess"))
-        api(project(":common:common-domain"))
+        implementation("org.springframework.kafka:spring-kafka")
+        testImplementation("org.springframework.boot:spring-boot-starter-test")
+        testImplementation("org.mockito.kotlin:mockito-kotlin:5.0.0")
+        testImplementation("org.springframework.kafka:spring-kafka-test")
+        testImplementation("org.testcontainers:junit-jupiter")
+        testImplementation("org.testcontainers:kafka")
+        testImplementation("org.testcontainers:mysql")
+        runtimeOnly("com.mysql:mysql-connector-j")
     }
 
     dependencyManagement {
         imports {
             mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+            mavenBom("org.testcontainers:testcontainers-bom:${property("testcontainersVersion")}")
         }
     }
 

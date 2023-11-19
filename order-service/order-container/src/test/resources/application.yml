@@ -4,33 +4,33 @@ server:
 spring:
   application:
     name: order-service
-  h2:
-    console:
-      enabled: true
-      settings:
-        web-allow-others: true
-      path: /h2-console
+#  h2:
+#    console:
+#      enabled: true
+#      settings:
+#        web-allow-others: true
+#      path: /h2-console
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:tc:mysql:8://testdb
     username: sa
     password:
-#    driver-class-name: org.mariadb.jdbc.Driver
-#    url: jdbc:mariadb://localhost:3306/mydb
-#    username: root
-#    password: test1357
+  #    driver-class-name: org.mariadb.jdbc.Driver
+  #    url: jdbc:mariadb://localhost:3306/mydb
+  #    username: root
+  #    password: test1357
   kafka:
     consumer:
-      bootstrap-servers: localhost:19092 # 로컬에서만. 도커에서는 환경변수로.
+      bootstrap-servers: localhost:9092 # 로컬에서만. 도커에서는 환경변수로.
       auto-offset-reset: earliest
       enable-auto-commit: false
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
     producer:
-      bootstrap-servers: localhost:19092 # 로컬에서만. 도커에서는 환경변수로.
+      bootstrap-servers: localhost:9092 # 로컬에서만. 도커에서는 환경변수로.
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     listener:

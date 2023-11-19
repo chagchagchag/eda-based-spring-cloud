@@ -1,5 +1,6 @@
 package net.spring.cloud.prototype.orderservice.dataaccess
 
+import net.spring.cloud.prototype.domain.event.OrderCreatedEvent
 import java.math.BigInteger
 import java.time.LocalDate
 import java.util.UUID

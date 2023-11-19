@@ -1,7 +1,11 @@
 package net.spring.cloud.prototype.orderservice.domain.outbox
 
+import net.spring.cloud.prototype.domain.event.EventType
+import net.spring.cloud.prototype.domain.event.OrderCreatedEvent
 import net.spring.cloud.prototype.domain.event.OutboxStatus
 import net.spring.cloud.prototype.domain.event.SagaStatus
+import net.spring.cloud.prototype.orderservice.dataaccess.dto.OrderDto
+import net.spring.cloud.prototype.orderservice.domain.factory.OrderCreatedEventFactory
 import net.spring.cloud.prototype.orderservice.domain.outbox.repository.OrderOutboxRepository
 import net.spring.cloud.prototype.orderservice.domain.publisher.OrderCreatedEventPublisher
 import org.apache.commons.lang.StringUtils
@@ -14,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional
 class OrderOutboxHelper (
     val orderOutboxRepository: OrderOutboxRepository,
     val orderCreatedEventPublisher: OrderCreatedEventPublisher,
+    val orderCreatedEventFactory: OrderCreatedEventFactory,
 ){
     private val logger: Logger = LoggerFactory.getLogger(javaClass)
 
@@ -27,7 +32,7 @@ class OrderOutboxHelper (
                 it
             }
             .forEach { outboxEntity ->
-                if(outboxEntity.payload == null || StringUtils.isEmpty(outboxEntity.payload))
+                if(outboxEntity.payload == null || outboxEntity.payload!!.isBlank())
                     throw IllegalArgumentException("SagaID 에 대해 outboxEntity 가 비어있습니다.")
 
                 val future = orderCreatedEventPublisher.sendEvent(outboxEntity.sagaId, outboxEntity.payload!!)
@@ -50,5 +55,13 @@ class OrderOutboxHelper (
                     }
                 }
             }
+    }
+
+    @Transactional
+    fun insertToOutbox(orderDto: OrderDto, eventType: EventType) : OrderCreatedEvent {
+        val orderCreatedEvent = orderCreatedEventFactory.fromOrderDto(orderDto)
+        val orderOutboxEntity = orderCreatedEventFactory.toOutboxEntity(orderCreatedEvent)
+        orderOutboxRepository.save(orderOutboxEntity)
+        return orderCreatedEvent
     }
 }
