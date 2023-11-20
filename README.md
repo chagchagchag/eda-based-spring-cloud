@@ -14,45 +14,7 @@
 
 
 
-> **User Container 기능 확인**<br>
-
-- POST `/signup`
-
-  - curl
-
-    - ```bash
-      curl -d '{"name": "asdf", "email": "asdf@gmail.com", "password": "aaaa"}' -H "Content-Type : application/json" -X POST http://localhost:8000/user-service/signup
-      ```
-
-  - .http
-
-    - 인텔리제이에서 user-service/user-container/src/test/kotlin 으로 이동후 `net.spring.cloud.prototype.user` 패키지 아래의 integration\_test 디렉터리에서 아래의 파일을 실행
-    - `signup.http`
-
-  - postman
-
-    - POST http://localhost:8000/user-service/signup
-    - Request Body (Raw, Json) : \{"name": "asdf", "email": "asdf@gmail.com", "password": "aaaa"\}
-
-- POST `/login`
-
-  - curl 
-
-    - ```bash
-      curl -d '{"name": "asdf", "email": "asdf@gmail.com", "password": "aaaa"}' -H "Content-Type : application/json" -X POST http://localhost:8000/user-service/login
-      ```
-
-  - .http
-
-    - 인텔리제이에서 user-service/user-container/src/test/kotlin 으로 이동후 `net.spring.cloud.prototype.user` 패키지 아래의 integration\_test 디렉터리에서 아래의 파일을 실행
-    - `login.http`
-
-  - postman
-
-    - POST http://localhost:8000/user-service/login
-    - Request Body (Raw, Json) : \{"name": "asdf", "email": "asdf@gmail.com", "password": "aaaa"\}
-
-<br>
+> 
 
 
 
@@ -146,6 +108,12 @@ Scheduler(Catalogue Service) → Catalogue 데이터베이스
 휴... 기빨리네요... 시간될때 꼭 정리해두겠습니다!!<br>
 
 <br>
+
+
+
+
+
+
 
 
 
