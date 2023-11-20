@@ -1,6 +1,7 @@
 package net.spring.cloud.prototype.orderservice.fixtures
 
 import net.spring.cloud.prototype.dataaccess.ulid.UlidCreator
+import net.spring.cloud.prototype.domain.fixtures.ObjectMapperFixtures
 import net.spring.cloud.prototype.domain.event.EventType
 import net.spring.cloud.prototype.domain.event.OrderCreatedEvent
 import net.spring.cloud.prototype.domain.event.OutboxStatus

@@ -1,10 +1,11 @@
-package net.spring.cloud.prototype.orderservice.unit_test.kafka
+package net.spring.cloud.prototype.catalogservice.unit_test.kafka
 
+import net.spring.cloud.prototype.catalogservice.fixtures.OrderCreatedEventFixtures
+import net.spring.cloud.prototype.catalogservice.kafka.KafkaStringProducer
 import net.spring.cloud.prototype.domain.event.OrderCreatedEvent
 import net.spring.cloud.prototype.domain.fixtures.ObjectMapperFixtures
-import net.spring.cloud.prototype.orderservice.fixtures.OrderCreatedEventFixtures
-import net.spring.cloud.prototype.orderservice.kafka.KafkaStringProducer
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -22,21 +23,23 @@ import org.springframework.test.annotation.DirtiesContext
         "port=9092"
     ]
 )
-class KafkaTemplateTest {
+class KafkaListenTest {
+
     private val logger: Logger = LoggerFactory.getLogger(javaClass)
 
-    @Autowired
-    private lateinit var orderCreatedEventTestConsumer: OrderCreatedEventTestConsumer
+    val orderCreatedTopic = "order-created-event-test"
 
     @Autowired
     private lateinit var kafkaStringProducer: KafkaStringProducer
 
-    val orderCreatedTopic = "order-created-event-test"
+    @Autowired
+    private lateinit var testOrderCreatedEventListener: TestOrderCreatedEventListener
 
     val testObjectMapper = ObjectMapperFixtures.nullableObjectMapper()
 
     @Test
-    fun `데이터 전송 테스트`(){
+    @DisplayName("테이터 수신 테스트")
+    fun `데이터 수신 테스트`(){
         // given
         //  Random 하게 생성한 OrderCreatedEvent + eventString
         val orderCreatedEvent = OrderCreatedEventFixtures.randomNewOrderCreatedEvent()
@@ -45,19 +48,21 @@ class KafkaTemplateTest {
         // when
         //  event 데이터를 카프카의 'order-created-event-test' 토픽으로 전송
         kafkaStringProducer.send(orderCreatedTopic, orderCreatedEvent.sagaId.toString(), eventString)
-        //  수신한 데이터를 변수에 기억
         Thread.sleep(3000)
-        logger.info(">>> 데이터 수신 완료 ::: ${orderCreatedEventTestConsumer.receivedString}")
-        val receivedString = orderCreatedEventTestConsumer.value
-        val receivedEvent = testObjectMapper.readValue<OrderCreatedEvent>(receivedString, OrderCreatedEvent::class.java)
+        logger.info(">>> 데이터 수신 완료 :: ${testOrderCreatedEventListener.messageList}")
+        val messageList = testOrderCreatedEventListener.messageList
 
         // then
-        // 수신한 데이터가 전송한 데이터와 일치하는지 검사
-        assertThat(receivedEvent.sagaId).isEqualTo(orderCreatedEvent.sagaId)
-        assertThat(receivedEvent.orderId).isEqualTo(orderCreatedEvent.orderId)
-        assertThat(receivedEvent.productId).isEqualTo(orderCreatedEvent.productId)
-        assertThat(receivedEvent.totalPrice).isEqualTo(orderCreatedEvent.totalPrice)
-        assertThat(receivedEvent.unitPrice).isEqualTo(orderCreatedEvent.unitPrice)
-        assertThat(receivedEvent.createdAt).isEqualTo(orderCreatedEvent.createdAt)
+        assertThat(messageList.size).isEqualTo(1)
+        messageList.forEach { message ->
+            val event = testObjectMapper.readValue<OrderCreatedEvent>(message, OrderCreatedEvent::class.java)
+            assertThat(event.sagaId).isEqualTo(orderCreatedEvent.sagaId)
+            assertThat(event.orderId).isEqualTo(orderCreatedEvent.orderId)
+            assertThat(event.productId).isEqualTo(orderCreatedEvent.productId)
+            assertThat(event.totalPrice).isEqualTo(orderCreatedEvent.totalPrice)
+            assertThat(event.unitPrice).isEqualTo(orderCreatedEvent.unitPrice)
+            assertThat(event.createdAt).isEqualTo(orderCreatedEvent.createdAt)
+        }
     }
+
 }
