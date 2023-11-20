@@ -208,7 +208,7 @@ order-service (루트프로젝트)
 
 #### catalog-service 모듈
 
-order-container (모듈)
+catalog-container (모듈)
 
 - `net.spring.cloud.prototype.catalogservice` (패키지)
 - /application
