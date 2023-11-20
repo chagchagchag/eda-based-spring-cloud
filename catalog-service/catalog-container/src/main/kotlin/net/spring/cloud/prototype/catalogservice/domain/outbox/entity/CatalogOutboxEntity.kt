@@ -8,6 +8,7 @@ import net.spring.cloud.prototype.dataaccess.ulid.UlidCreator
 import net.spring.cloud.prototype.domain.event.EventType
 import net.spring.cloud.prototype.domain.event.OutboxStatus
 import net.spring.cloud.prototype.domain.event.SagaStatus
+import java.lang.IllegalArgumentException
 import java.time.ZonedDateTime
 import java.util.*
 
@@ -36,4 +37,13 @@ class CatalogOutboxEntity (
     @Column(nullable = false)
     var payload: String? = payload
 
+    fun updateToProcessing(){
+        outboxStatus = OutboxStatus.PROCESSING
+        sagaStatus = SagaStatus.PROCESSING
+    }
+
+    fun validatePayload(){
+        if(payload == null || payload!!.isBlank())
+            throw IllegalArgumentException("SagaID 에 대해 outboxEntity 가 비어있습니다.")
+    }
 }
