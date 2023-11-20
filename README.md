@@ -131,7 +131,7 @@ Scheduler(Catalogue Service) → Catalogue 데이터베이스
 
 #### 설계, 코드 구조, ERD
 
-휴... 기빨리네요... 시간될때 꼭 정리해두겠습니다!!<br>
+ERD 문서 작성 중...
 
 <br>
 
@@ -187,36 +187,72 @@ messaging 모듈, user-domain 모듈 등을 따로 둔 이유는 메시징과 �
 
 #### user-service 모듈
 
-user-service 모듈에는 아래의 5가지 모듈이 있습니다.
+user-service 모듈에는 user-container 모듈이 존재합니다.
 
-- user-application
-  - REST Controller, RestControllerAdvice, Parameter Validation 등 Web 계층에 대한 코드
-- user-container
-  - `@SpringBootApplication` , application.yml, application-local.yml 등 애플리케이션의 실행을 위한 설정파일들을 모아둔 모듈
-- user-dataaccesss
-  - Entity, JPA Repository, JpaConfig 등 데이터 접근 코드만을 모아둔 모듈
-- user-domain
-  - user-application-service
-    - Spring Security 기반 인증 필터, Security Config 코드, JWT 생성/분해, 데이터 매핑 (Entity → Dto, Dto → vo(Request, Response)), Repository 호출 및 트랜잭션 처리 코드들을 모아둔 모듈
-  - user-domain-core
-    - DDD 적용시 domain event, exception 등을 구현하기 위한 모듈
-- user-messaging
-  - 메시징을 위한 모듈.
-  - infrastructure/kafka 아래의 kafka 모듈들을 활용해 user-service 에서 수행하는 메시징 로직들을 정의하는 모듈
-
-<br>
+작성 초기에는 [Microservices: Clean Architector, DDD, SAGA, Outbox & Kafka](https://www.udemy.com/course/microservices-clean-architecture-ddd-saga-outbox-kafka-kubernetes/) 강의에서 제공하는 실습 예제를 분석해서 kotlin 기반으로 작성 와중에 user-application, user-container, user-dataaccess, user-domain, user-messaging 과 같은 모듈로 각각의 모듈을 분리했었는데, 이번 프로젝트에서는 그 정도로까지 세분화는 필요가 없어서 아래와 같이 코드의 계층을 설계했습니다.
 
 
 
-#### order-service 모듈
+order-service (루트프로젝트)
 
-<br>
+- order-container (모듈)
+  - `net.spring.cloud.prototype.orderservice` (패키지)
+  - /application
+    - Rest Controller, RestController Advice, Parameter Validation 등 웹 계층의 역할 수행하는 계층
+  - /dataaccess
+    - 데이터 저장 및 Database 연산을 담당
+    - 데이터의 변경 발생시 그에 해당되는 Domain Event 를 생성하도록 OrderDomainService 의 insertToOutbox()메서드를 호출
+  - /domain
+    - DomainEvent 생성 역할을 수행
+    - outbox,scheduler,listener,publisher 를 통해 도메인 이벤트의 리스닝, 발신, 스케쥴링 역할을 담당
+    - /outbox
+      - outbox 패턴을 따르는 repository, entity 를 기술한 계층
+    - /publisher
+      - DomainEvent 의 전송 역할을 담당하는 Publisher들을 모아두는 계층
+    - /scheduler
+      - 일정 시간 간격으로 배치 사이즈에 맞게끔 outbox 테이블에서 필요한 만큼의 이벤트 리스트를 인출해서 메시지큐로 전송할 수 있도록 스케쥴링 해주는 역할을 담당
+  - /kafka
+    - 카프카 메시지 전송 등의 코드들을 컴포넌트 화 해둔 계층
+
+
+
+<img src="./img/order-service.png" width="60%" height="60%"/>
 
 
 
 #### catalog-service 모듈
 
+order-container (모듈)
+
+- `net.spring.cloud.prototype.catalogservice` (패키지)
+- /application
+  - Rest Controller, RestController Advice, Parameter Validation 등 웹 계층의 역할 수행하는 계층
+- /dataaccess
+  - 데이터 저장 및 Database 연산을 담당
+  - 데이터의 변경 발생시 그에 해당되는 Domain Event 를 생성하도록 OrderDomainService 의 insertToOutbox()메서드를 호출
+- /domain
+  - DomainEvent 생성 역할을 수행
+  - outbox,scheduler,listener,publisher 를 통해 도메인 이벤트의 리스닝, 발신, 스케쥴링 역할을 담당
+  - /outbox
+    - outbox 패턴을 따르는 repository, entity 를 기술한 계층
+  - /publisher
+    - DomainEvent 의 전송 역할을 담당하는 Publisher들을 모아두는 계층
+  - /scheduler
+    - 일정 시간 간격으로 배치 사이즈에 맞게끔 outbox 테이블에서 필요한 만큼의 이벤트 리스트를 인출해서 메시지큐로 전송할 수 있도록 스케쥴링 해주는 역할을 담당
+- /kafka
+  - 카프카 메시지 전송 등의 코드들을 컴포넌트 화 해둔 계층
+
 <br>
+
+<img src="./img/catalog-service.png" width="60%" height="60%"/>
+
+<br>
+
+
+
+#### user-service 모듈
+
+작성 예정
 
 
 
@@ -260,6 +296,10 @@ user-service 모듈에는 아래의 5가지 모듈이 있습니다.
 
 
 ### 이 예제 프로젝트의 목적
+
+아래 내용들은 다시 수정 예정 흑흑...
+
+
 
 [CleanArchitecture, DDD](https://www.udemy.com/course/microservices-clean-architecture-ddd-saga-outbox-kafka-kubernetes/) 에서 제공하는 SAGA, Outbox 기반의 멀티모듈 방식과
 
