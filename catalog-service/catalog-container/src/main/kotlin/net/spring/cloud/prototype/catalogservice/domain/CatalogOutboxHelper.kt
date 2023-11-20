@@ -5,10 +5,8 @@ import net.spring.cloud.prototype.catalogservice.domain.outbox.CatalogOutboxRepo
 import net.spring.cloud.prototype.catalogservice.kafka.ObjectMapperUtils
 import net.spring.cloud.prototype.domain.converter.EventConverter
 import net.spring.cloud.prototype.domain.event.OrderCreatedEvent
-import org.apache.commons.lang.StringUtils
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import java.lang.IllegalArgumentException
 
 @Component
 class CatalogOutboxHelper (
@@ -29,10 +27,10 @@ class CatalogOutboxHelper (
                     .fromEventString<OrderCreatedEvent>(objectMapperUtils.nullableObjectMapper, catalogOutboxEntity.payload!!)
 
                 val catalogStockStatus = catalogDataAccessHelper
-                    .decreaseCatalogStock(orderCreatedEvent.productId, orderCreatedEvent.qty)
+                    .updateOrderCreatedItem(orderCreatedEvent)
 
-                catalogOutboxRepositoryHelper
-                    .updateByCatalogStockStatus(catalogStockStatus, catalogOutboxEntity)
+                catalogOutboxEntity.postHandleOutbox(catalogStockStatus)
+                catalogOutboxEntity.postHandleSaga(catalogStockStatus)
             }
     }
 
