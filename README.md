@@ -1,7 +1,29 @@
+## EDA (Event Driven Architecture) 기반 Spring Cloud 예제
+
+> 10월 말 \~ 11월 중순에 코딩테스트, 인적성 시험 전형이 있었는데 이 과정에 전형 준비를 해야 하는 관계로 인해 잠시 작업을 멈춰두게 되었고 오늘 부터 다시 작업을 시작 중입니다. 11월 23일 내로 기능을 완성할 것 같고 기능확인, 테스트코드에 대한 내용들을 정리할 수 있을 것으로 보입니다.
+
+<br>
+
+
+
+### 사용기술
+
+- Kotlin, Spring Boot, Gradle(Kotlin DSL), JPA, Kafka, Docker, Docker Compose, Testcontainers, MySQL
+- Gradle 멀티모듈 기반으로 주문서비스, 조회서비스, 사용자 서비스를 구성한 프로젝트입니다.
+- Database 에 데이터를 저장/수정/삭제 등의 Domain Event 가 발생할 때 생성된 Domain Event 객체를 메시지 큐를 통해 주문서비스, 조회서비스,사용자서비스 간에 통신하고, Domain Event 를 통한 데이터 동기화를 수행합니다.
+- 이 프로젝트의 가장 기초 골격이 되는 아이디어는 [Microservices: Clean Architector, DDD, SAGA, Outbox & Kafka](https://www.udemy.com/course/microservices-clean-architecture-ddd-saga-outbox-kafka-kubernetes/) 에서 얻어왔습니다.
+- [Spring Cloud로 개발하는 마이크로서비스 애플리케이션(MSA)](https://www.inflearn.com/course/스프링-클라우드-마이크로서비스/dashboard) 의 예제를 조금 개선해보려다가 DDD 기반으로 전환하겠다!! 하는 마음을 먹고 나서 일이 이렇게까지 커졌는데... 빠른 시일안에 마무리 지어야 할 것 같다는...생각을 하는 중입니다.
+- 원래 정말 제대로 하면 Outbox에 도메인 이벤트 데이터를 쌓아두는 것 역시도 비동기적으로 수행해야 하는데 이 부분에 대해서는 생략했습니다.
+
+<br>
+
+
 
 ### 완료된 부분 (2023.10)
 
 현재 User Container 와 여기에 따르는 Api Gateway 에서의 회원가입, 로그인 처리, 로컬 카프카 클러스터 도커 컴포즈 세팅작업까지 완료되어 있습니다. 회원가입, 로그인 시 사용한 인증 방식은 JWT 기반 Spring Security 방식입니다. RestDocs 또는 Swagger 를 적용해야 하는데, 이 부분은 Order Service, CatalogService  작업이 마무리 된 후 작업할 예정입니다.<br>
+
+<br>
 
 
 
@@ -12,15 +34,19 @@
 - 로컬 카프카 docker-compose
   - 클러스터 3기, 주키퍼 1기, 카프카 매니저 1기 
 
+<br>
 
 
-> 
+
+> User Service 의 로그인, JWT 기능 확인방식에 대해서는 [개발문서 - User Service 기능확인](https://github.com/chagchagchag/eda-based-spring-cloud/blob/main/docs/%EA%B0%9C%EB%B0%9C%EB%AC%B8%EC%84%9C-User%20Service%20%EA%B8%B0%EB%8A%A5%20%ED%99%95%EC%9D%B8.md) 에 정리해두었습니다.
+
+<br>
 
 
 
 ### 현재 진행중인 개발 내용 (2023.11\~)
 
-> 10 월 버전 이후로 소스코드를 수정중이고,  원래 계획하지 않았던 AVRO 를 도입하기로 하면서 조금 늦어지고 있습니다. 아마도 11월 말 쯤에 현재 진행중인 EDA 기반의 프로젝트를 확인할 수 있게될 듯 합니다. <br>
+> 10월 말 \~ 11월 초에 코딩테스트, 인적성 시험 전형이 있었는데 이 과정에 잠시 작업을 멈춰두게 되었고 지금 작업을 시작 중입니다. 11월 23일 내로 기능을 완성할 것 같고 기능확인, 테스트코드에 대한 내용들을 정리할 수 있을 것으로 보입니다.
 
 <br>
 
@@ -118,6 +144,10 @@ Scheduler(Catalogue Service) → Catalogue 데이터베이스
 
 
 ### 실행
+
+> 도커 실행 환경 역시 추후 개선이 필요할 경우 수정을 할 예정입니다.
+
+
 
 - 이 프로젝트는 로컬 개발환경에서는 Docker, Docker Compose 를 기반으로 구동합니다.
 - 로컬에서 이 프로젝트를 실행시키시려면 아래의 명령어를 터미널에서 실행시켜주세요.
