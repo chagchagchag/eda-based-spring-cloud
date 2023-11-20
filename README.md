@@ -171,20 +171,6 @@ source local-build-all-docker-image.sh
 
 ### 소스 코드 파악
 
-user-service, order-service, catalog-service 를 각각의 모듈로 취급해 각각의 MSA 들을 개별 리포지터리에서 작업이 가능하도록 모듈로 구성했고 여기에 필요한 common 모듈, infrastructure/kafka 모듈은 필요에 따라 include 할 수 있도록 독립적으로 구성해두었습니다.<br>
-
-messaging 모듈, user-domain 모듈 등을 따로 둔 이유는 메시징과 같은 구현이 변할 때 전체 프로젝트를 변경하는 것이 아닌 개별 모듈을 변경할수 있도록 하고 외부로 노출하는 기능은 Interface로 노출해서 종속성을 줄이도록 하기 위해 멀티 모듈로 따로 구성해두었습니다.<br>
-
-<br>
-
-개발 초반에 빠르게 어떤 기능을 만들어보기 위해서는 프로젝트 1개로 구현하는 것이 좋은데, 이렇게 하는 방식은 이미 알고 있었기에 조금은 유지보수가 용이하게 구성하는 멀티 모듈 방식으로 실습프로젝트를 구성하기로 했습니다. 멀티 모듈을 기반으로 기능들을 구성하면 기능 별 종속도와 결합도가 조금씩 낮아집니다. <br>
-
-이렇게 멀티모듈로 구성 시에 설계 구조를 참고했던 자료는 [CleanArchitecture, DDD](https://www.udemy.com/course/microservices-clean-architecture-ddd-saga-outbox-kafka-kubernetes/) 입니다.
-
-<br>
-
-
-
 #### user-service 모듈
 
 user-service 모듈에는 user-container 모듈이 존재합니다.
