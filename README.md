@@ -171,15 +171,21 @@ source local-build-all-docker-image.sh
 
 ### 소스 코드 파악
 
+작성 초기에는 [Microservices: Clean Architector, DDD, SAGA, Outbox & Kafka](https://www.udemy.com/course/microservices-clean-architecture-ddd-saga-outbox-kafka-kubernetes/) 강의에서 제공하는 실습 예제는 ooo-application, ooo-container, ooo-dataaccess, ooo-domain, ooo-messaging 과 같은 모듈로 분리하는 방식의 구조입니다. 이번 예제 구현의 초창기에는 이 구조를 따르다가 얼마 전부터 그 정도로까지 세분화는 필요가 없어서 ooo-service 모듈/ooo-container 모듈과 같은 구조입니다.<br>
+
+
+
 #### user-service 모듈
 
 user-service 모듈에는 user-container 모듈이 존재합니다.
 
-작성 초기에는 [Microservices: Clean Architector, DDD, SAGA, Outbox & Kafka](https://www.udemy.com/course/microservices-clean-architecture-ddd-saga-outbox-kafka-kubernetes/) 강의에서 제공하는 실습 예제를 분석해서 kotlin 기반으로 작성 와중에 user-application, user-container, user-dataaccess, user-domain, user-messaging 과 같은 모듈로 각각의 모듈을 분리했었는데, 이번 프로젝트에서는 그 정도로까지 세분화는 필요가 없어서 아래와 같이 코드의 계층을 설계했습니다.
+- [Microservices: Clean Architector, DDD, SAGA, Outbox & Kafka](https://www.udemy.com/course/microservices-clean-architecture-ddd-saga-outbox-kafka-kubernetes/) 에서 이야기하는 멀티모듈 구조kotlin 기반으로 작성했는데, user-service 모듈은 아직 구조를 ooo-service/ooo-container 구조로 변경해두진 못해둔 상태입니다. (로그인, 회원가입, JWT 헤더 추가 등의 인증 기능은 정상동작합니다.)
+
+<br>
 
 
 
-order-service (루트프로젝트)
+#### order-service (루트프로젝트)
 
 - order-container (모듈)
   - `net.spring.cloud.prototype.orderservice` (패키지)
@@ -203,6 +209,8 @@ order-service (루트프로젝트)
 
 
 <img src="./img/order-service.png" width="60%" height="60%"/>
+
+<br>
 
 
 
@@ -233,12 +241,6 @@ catalog-container (모듈)
 <img src="./img/catalog-service.png" width="60%" height="60%"/>
 
 <br>
-
-
-
-#### user-service 모듈
-
-작성 예정
 
 
 
