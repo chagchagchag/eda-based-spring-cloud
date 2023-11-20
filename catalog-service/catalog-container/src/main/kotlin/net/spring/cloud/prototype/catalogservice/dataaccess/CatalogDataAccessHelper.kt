@@ -1,11 +1,10 @@
 package net.spring.cloud.prototype.catalogservice.dataaccess
 
 import net.spring.cloud.prototype.catalogservice.dataaccess.repository.CatalogJpaRepository
-import net.spring.cloud.prototype.domain.event.CatalogStockStatus
+import net.spring.cloud.prototype.catalogservice.domain.CatalogStockStatus
+import net.spring.cloud.prototype.domain.event.OrderCreatedEvent
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import java.math.BigInteger
-import java.util.UUID
 
 @Component
 class CatalogDataAccessHelper (
@@ -13,10 +12,13 @@ class CatalogDataAccessHelper (
 ){
 
     @Transactional
-    fun decreaseCatalogStock(productId: UUID, qty: BigInteger) : CatalogStockStatus {
+    fun updateOrderCreatedItem(orderCreatedEvent: OrderCreatedEvent): CatalogStockStatus {
+        val productId = orderCreatedEvent.productId
+        val qty = orderCreatedEvent.qty
+
         return catalogJpaRepository
             .findByProductId(productId)
-            ?.let { catalogEntity ->
+            ?.let{ catalogEntity ->
                 catalogEntity.decreaseQty(qty)
                 CatalogStockStatus.NORMAL
             }

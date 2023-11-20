@@ -3,6 +3,7 @@ package net.spring.cloud.prototype.catalogservice.domain.outbox.entity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Table
+import net.spring.cloud.prototype.catalogservice.domain.CatalogStockStatus
 import net.spring.cloud.prototype.dataaccess.entity.PrimaryKeyEntity
 import net.spring.cloud.prototype.dataaccess.ulid.UlidCreator
 import net.spring.cloud.prototype.domain.event.EventType
@@ -46,4 +47,20 @@ class CatalogOutboxEntity (
         if(payload == null || payload!!.isBlank())
             throw IllegalArgumentException("SagaID 에 대해 outboxEntity 가 비어있습니다.")
     }
+
+    fun postHandleOutbox(catalogStockStatus: CatalogStockStatus){
+        if(catalogStockStatus == CatalogStockStatus.NORMAL)
+            outboxStatus = OutboxStatus.FINISHED
+        else
+            outboxStatus = OutboxStatus.PENDING
+    }
+
+    fun postHandleSaga(catalogStockStatus: CatalogStockStatus){
+        if(catalogStockStatus == CatalogStockStatus.NORMAL)
+            sagaStatus = SagaStatus.FINISHED
+        else
+            sagaStatus = SagaStatus.PENDING
+    }
+
+
 }
