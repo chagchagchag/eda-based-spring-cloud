@@ -179,7 +179,7 @@ source local-build-all-docker-image.sh
 
 user-service 모듈에는 user-container 모듈이 존재합니다.
 
-- [Microservices: Clean Architector, DDD, SAGA, Outbox & Kafka](https://www.udemy.com/course/microservices-clean-architecture-ddd-saga-outbox-kafka-kubernetes/) 에서 이야기하는 멀티모듈 구조kotlin 기반으로 작성했는데, user-service 모듈은 아직 구조를 ooo-service/ooo-container 구조로 변경해두진 못해둔 상태입니다. (로그인, 회원가입, JWT 헤더 추가 등의 인증 기능은 정상동작합니다.)
+- [Microservices: Clean Architector, DDD, SAGA, Outbox & Kafka](https://www.udemy.com/course/microservices-clean-architecture-ddd-saga-outbox-kafka-kubernetes/) 에서 이야기하는 maven 멀티모듈 구조를  gradle kotlin 기반의 멀티 모듈로 작성했으나, user-service 모듈은 아직 구조를 ooo-service/ooo-container 구조로 단순하게 변경해두진 못해둔 상태입니다. 즉, 모듈 구조를 단순화하는 작업을 아직 해두지 않았습니다. (로그인, 회원가입, JWT 헤더 추가 등의 인증 기능은 정상동작합니다.)
 
 <br>
 
