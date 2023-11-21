@@ -54,7 +54,7 @@
 
 #### 아키텍처
 
-Order Service 와 Catalogue Service 간의 데이터 동기화를 SAGA, Outbox 방식으로 풀어내는 작업을 하고 있습니다. 예를 들면 아래와 같은 구조입니다.
+Order Service (주문서비스) 와 Catalogue Service(조회 서비스) 간의 데이터 동기화를 SAGA, Outbox 방식으로 풀어내는 작업을 하고 있습니다. 예를 들면 아래와 같은 구조입니다.
 
 <img src="./img/EDA-1.png" width="90%" height="90%"/>
 
@@ -134,6 +134,19 @@ Scheduler(Catalogue Service) → Catalogue 데이터베이스
 ERD 문서 작성 중...
 
 <br>
+
+
+
+### 빌드
+
+모든 WAS 코드를 이미지 빌드하는 코드는 쉘스크립트로 작성해두었습니다.
+
+도커이미지는 모두 도커허브에 최신버전의 빌드를 올려둔 상태이기에 소스 코드를 수정한 것이 아니라면 가급적 빌드를 안하시는 것을 권장드립니다. (개발PC 속도 저하문제)
+
+```bash
+cd docker-compose
+source build-all-docker-image.sh
+```
 
 
 
