@@ -1,9 +1,7 @@
 package net.spring.cloud.prototype.catalogservice.dataaccess
 
-import net.spring.cloud.prototype.catalogservice.dataaccess.entity.CatalogEntity
 import net.spring.cloud.prototype.catalogservice.dataaccess.repository.CatalogJpaRepository
 import net.spring.cloud.prototype.catalogservice.fixtures.CatalogEntityFixtures
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
