@@ -30,7 +30,7 @@ class CatalogEntity(
     @Column(nullable = false)
     var unitPrice: BigInteger = unitPrice
 
-    @Column(nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP")
+    @Column(name = "created_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP")
     val createdAt: OffsetDateTime = createdAt
 
     fun decreaseQty(qty : BigInteger){
