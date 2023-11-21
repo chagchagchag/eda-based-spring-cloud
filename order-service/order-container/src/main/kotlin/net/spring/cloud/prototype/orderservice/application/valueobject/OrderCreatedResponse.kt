@@ -1,7 +1,7 @@
 package net.spring.cloud.prototype.orderservice.application.valueobject
 
 import java.math.BigInteger
-import java.time.LocalDate
+import java.time.OffsetDateTime
 
 data class OrderCreatedResponse(
     val productId: String,
@@ -11,5 +11,5 @@ data class OrderCreatedResponse(
     val unitPrice: BigInteger,
     val totalPrice: BigInteger,
 
-    val createdAt: LocalDate,
+    val createdAt: OffsetDateTime,
 )
