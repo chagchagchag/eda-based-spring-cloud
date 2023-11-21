@@ -9,7 +9,6 @@ import org.springframework.data.repository.query.Param
 import java.util.*
 
 interface OrderOutboxRepository : JpaRepository<OrderOutboxEntity, UUID>{
-
     @Query(
         "SELECT o " +
         "FROM OrderOutboxEntity o " +
