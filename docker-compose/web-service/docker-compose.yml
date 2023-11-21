@@ -1,18 +1,21 @@
 services:
   eda-sample-discovery-service:
     image: chagchagchag/eda-sample-discovery-service
+    container_name: eda-sample-discovery-service
     ports:
       - "8761:8761"
     networks:
-      - msa-prototype
+      - kafka_msa-prototype
   eda-sample-config-service:
     image: chagchagchag/eda-sample-config-service
+    container_name: eda-sample-config-service
     ports:
       - "9999:9999"
     networks:
-      - msa-prototype
+      - kafka_msa-prototype
   eda-sample-api-gateway:
     image: chagchagchag/eda-sample-api-gateway
+    container_name: eda-sample-api-gateway
     environment:
 #      spring,config.import: optional:config-service
 #      spring.cloud.config.uri: http://eda-sample-config-service:9999
@@ -20,7 +23,7 @@ services:
     ports:
       - "8000:8000"
     networks:
-      - msa-prototype
+      - kafka_msa-prototype
   user-service-container:
     image: chagchagchag/user-service-container
     environment:
@@ -30,7 +33,7 @@ services:
       eureka.client.serviceUrl.defaultZone: http://eda-sample-discovery-service:8761/eureka/
       logging.file: /api-logs/users-ws.log
     networks:
-      - msa-prototype
+      - kafka_msa-prototype
   order-service-container:
     image: chagchagchag/order-service-container
     environment:
@@ -40,7 +43,7 @@ services:
       eureka.client.serviceUrl.defaultZone: http://eda-sample-discovery-service:8761/eureka/
       logging.file: /api-logs/users-ws.log
     networks:
-      - msa-prototype
+      - kafka_msa-prototype
   catalog-service-container:
     image: chagchagchag/catalog-service-container
     environment:
@@ -50,4 +53,4 @@ services:
       eureka.client.serviceUrl.defaultZone: http://eda-sample-discovery-service:8761/eureka/
       logging.file: /api-logs/users-ws.log
     networks:
-      - msa-prototype
+      - kafka_msa-prototype
