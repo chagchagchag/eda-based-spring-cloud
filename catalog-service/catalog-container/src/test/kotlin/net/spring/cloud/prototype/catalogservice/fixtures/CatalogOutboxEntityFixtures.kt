@@ -7,7 +7,7 @@ import net.spring.cloud.prototype.domain.event.OrderCreatedEvent
 import net.spring.cloud.prototype.domain.event.OutboxStatus
 import net.spring.cloud.prototype.domain.event.SagaStatus
 import net.spring.cloud.prototype.domain.fixtures.ObjectMapperFixtures
-import java.time.ZonedDateTime
+import java.time.OffsetDateTime
 
 class CatalogOutboxEntityFixtures {
 
@@ -16,7 +16,7 @@ class CatalogOutboxEntityFixtures {
         : CatalogOutboxEntity {
             val objectMapper = ObjectMapperFixtures.nullableObjectMapper()
             return CatalogOutboxEntity(
-                createdAt = ZonedDateTime.now(),
+                createdAt = OffsetDateTime.now(),
                 sagaId = orderCreatedEvent.sagaId,
                 sagaStatus = SagaStatus.CREATED,
                 outboxStatus = OutboxStatus.CREATED,
@@ -28,7 +28,7 @@ class CatalogOutboxEntityFixtures {
         fun fromNullOrderCreatedEvent()
         : CatalogOutboxEntity {
             return CatalogOutboxEntity(
-                createdAt = ZonedDateTime.now(),
+                createdAt = OffsetDateTime.now(),
                 sagaId = UlidCreator.monotonicUuid(),
                 sagaStatus = SagaStatus.CREATED,
                 outboxStatus = OutboxStatus.CREATED,
@@ -40,7 +40,7 @@ class CatalogOutboxEntityFixtures {
         fun fromEmptyStringOrderCreatedEvent()
         : CatalogOutboxEntity {
             return CatalogOutboxEntity(
-                createdAt = ZonedDateTime.now(),
+                createdAt = OffsetDateTime.now(),
                 sagaId = UlidCreator.monotonicUuid(),
                 sagaStatus = SagaStatus.CREATED,
                 outboxStatus = OutboxStatus.CREATED,
