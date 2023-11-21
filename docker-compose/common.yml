@@ -1,6 +1,0 @@
-version: '3.7'
-
-networks:
-  msa-prototype:
-    driver: bridge
-#    external: true

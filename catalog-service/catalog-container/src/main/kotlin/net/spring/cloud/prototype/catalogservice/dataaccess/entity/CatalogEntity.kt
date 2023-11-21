@@ -4,23 +4,21 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Table
 import net.spring.cloud.prototype.dataaccess.entity.PrimaryKeyEntity
-import org.hibernate.annotations.ColumnDefault
 import java.math.BigInteger
-import java.time.LocalDate
-import java.time.ZonedDateTime
-import java.util.UUID
+import java.time.OffsetDateTime
+import java.util.*
 
 @Entity
 @Table(name = "catalog")
-class CatalogEntity (
+class CatalogEntity(
     productId: UUID,
     productName: String,
     stock: BigInteger,
     unitPrice: BigInteger,
-    createdAt: ZonedDateTime,
+    createdAt: OffsetDateTime = OffsetDateTime.now(),
 ) : PrimaryKeyEntity(){
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "BINARY(16)", nullable = false)
     val productId = productId
 
     @Column(nullable = false, length = 120, unique = false)
@@ -32,9 +30,8 @@ class CatalogEntity (
     @Column(nullable = false)
     var unitPrice: BigInteger = unitPrice
 
-    @Column(nullable = false, updatable = false, insertable = false)
-    @ColumnDefault(value = "CURRENT_TIMESTAMP")
-    val createdAt: ZonedDateTime = createdAt
+    @Column(nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP")
+    val createdAt: OffsetDateTime = createdAt
 
     fun decreaseQty(qty : BigInteger){
         stock -= qty

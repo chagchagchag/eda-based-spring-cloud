@@ -1,8 +1,11 @@
-GRANT ALL PRIVILEGES ON root.* TO 'root'@'%' IDENTIFIED BY 'test1357' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'test1357' WITH GRANT OPTION;
 flush privileges;
 
+create schema `users`;
+create schema `orders`;
+create schema `catalogs`;
 
-create table users
+create table `users`.users_sample
 (
     id         int auto_increment
         primary key,
