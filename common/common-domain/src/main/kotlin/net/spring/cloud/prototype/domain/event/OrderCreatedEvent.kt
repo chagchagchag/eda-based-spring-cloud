@@ -1,7 +1,7 @@
 package net.spring.cloud.prototype.domain.event
 
 import java.math.BigInteger
-import java.time.LocalDate
+import java.time.OffsetDateTime
 import java.util.*
 
 data class OrderCreatedEvent (
@@ -11,7 +11,7 @@ data class OrderCreatedEvent (
     val qty: BigInteger,
     val unitPrice: BigInteger,
     val totalPrice: BigInteger,
-    val createdAt: LocalDate,
+    val createdAt: OffsetDateTime,
 ): OrderEvent(
     eventType = EventType.ORDER_CREATED
 ){

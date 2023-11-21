@@ -8,7 +8,6 @@ import net.spring.cloud.prototype.orderservice.dataaccess.dto.OrderDto
 import net.spring.cloud.prototype.orderservice.domain.factory.OrderCreatedEventFactory
 import net.spring.cloud.prototype.orderservice.domain.outbox.repository.OrderOutboxRepository
 import net.spring.cloud.prototype.orderservice.domain.publisher.OrderCreatedEventPublisher
-import org.apache.commons.lang.StringUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component

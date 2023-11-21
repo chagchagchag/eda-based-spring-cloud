@@ -1,7 +1,7 @@
 package net.spring.cloud.prototype.orderservice.dataaccess.dto
 
 import java.math.BigInteger
-import java.time.LocalDate
+import java.time.OffsetDateTime
 import java.util.*
 
 data class OrderDto(
@@ -11,5 +11,5 @@ data class OrderDto(
     val qty: BigInteger,
     val unitPrice: BigInteger,
     val totalPrice: BigInteger,
-    val createdAt: LocalDate,
+    val createdAt: OffsetDateTime,
 )

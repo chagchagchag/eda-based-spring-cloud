@@ -4,7 +4,7 @@ import net.spring.cloud.prototype.dataaccess.ulid.UlidCreator
 import net.spring.cloud.prototype.domain.event.OrderCreatedEvent
 import net.spring.cloud.prototype.orderservice.dataaccess.dto.OrderDto
 import java.math.BigInteger
-import java.time.LocalDate
+import java.time.OffsetDateTime
 
 class OrderCreatedEventFixtures {
     companion object{
@@ -28,7 +28,7 @@ class OrderCreatedEventFixtures {
                 qty = BigInteger.TEN,
                 unitPrice = BigInteger.valueOf(1000),
                 totalPrice = BigInteger.valueOf(10000),
-                createdAt = LocalDate.now(),
+                createdAt = OffsetDateTime.now(),
             )
         }
 

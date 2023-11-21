@@ -10,7 +10,6 @@ import net.spring.cloud.prototype.orderservice.application.OrderSagaHelper
 import net.spring.cloud.prototype.orderservice.application.mapper.OrderRequestMapper
 import net.spring.cloud.prototype.orderservice.application.valueobject.OrderCreatedResponse
 import net.spring.cloud.prototype.orderservice.application.valueobject.OrderRequest
-import net.spring.cloud.prototype.orderservice.application.valueobject.ResponseOrder
 import org.slf4j.LoggerFactory
 import org.springframework.core.env.Environment
 import org.springframework.http.HttpHeaders
@@ -70,13 +69,5 @@ class OrderController (
                     .body(orderCreatedResponse)
             }
             ?: throw IllegalArgumentException("Authorization Header 는 비어있을 수 없습니다.")
-    }
-
-
-    // todo 인프런 코드 변환 필요
-    @GetMapping("/{userId}/orders")
-    fun getOrder(@PathVariable("userId") userId: String) : ResponseEntity<List<ResponseOrder>> {
-        val responseOrders = orderSagaHelper.getOrderByUserId(userId)
-        return ResponseEntity.status(HttpStatus.OK).body(responseOrders)
     }
 }

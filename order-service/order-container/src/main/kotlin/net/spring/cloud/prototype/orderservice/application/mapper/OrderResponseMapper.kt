@@ -1,10 +1,9 @@
 package net.spring.cloud.prototype.orderservice.application.mapper
 
 import net.spring.cloud.prototype.domain.event.OrderCreatedEvent
-import net.spring.cloud.prototype.orderservice.dataaccess.dto.OrderDto
 import net.spring.cloud.prototype.orderservice.application.valueobject.OrderCreatedResponse
 import net.spring.cloud.prototype.orderservice.application.valueobject.OrderResponse
-import net.spring.cloud.prototype.orderservice.application.valueobject.ResponseOrder
+import net.spring.cloud.prototype.orderservice.dataaccess.dto.OrderDto
 import org.springframework.stereotype.Component
 
 @Component

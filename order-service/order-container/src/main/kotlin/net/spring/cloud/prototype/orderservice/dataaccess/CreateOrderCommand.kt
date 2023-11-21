@@ -1,9 +1,8 @@
 package net.spring.cloud.prototype.orderservice.dataaccess
 
-import net.spring.cloud.prototype.domain.event.OrderCreatedEvent
 import java.math.BigInteger
-import java.time.LocalDate
-import java.util.UUID
+import java.time.OffsetDateTime
+import java.util.*
 
 data class CreateOrderCommand(
     val orderId: UUID,
@@ -12,5 +11,5 @@ data class CreateOrderCommand(
     val qty: BigInteger,
     val unitPrice: BigInteger,
     val totalPrice: BigInteger,
-    val createdAt: LocalDate,
+    val createdAt: OffsetDateTime,
 )
