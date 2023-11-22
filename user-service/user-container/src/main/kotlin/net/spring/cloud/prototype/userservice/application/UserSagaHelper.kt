@@ -1,7 +1,7 @@
 package net.spring.cloud.prototype.userservice.application
 
 import net.spring.cloud.prototype.userservice.dataaccess.repository.UserJpaRepository
-import net.spring.cloud.prototype.userservice.domain.dto.UserDto
+import net.spring.cloud.prototype.userservice.dataaccess.dto.UserDto
 import net.spring.cloud.prototype.userservice.dataaccess.UserDataMapper
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Component
