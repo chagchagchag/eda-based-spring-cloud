@@ -1,8 +1,6 @@
 package net.spring.cloud.prototype.orderservice.domain.outbox.entity
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import net.spring.cloud.prototype.domain.event.OutboxStatus
 import net.spring.cloud.prototype.domain.event.SagaStatus
 import net.spring.cloud.prototype.dataaccess.entity.PrimaryKeyEntity
@@ -24,16 +22,19 @@ class OrderOutboxEntity (
     payload: String?
 ): PrimaryKeyEntity(){
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     var sagaStatus: SagaStatus = sagaStatus
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     var outboxStatus: OutboxStatus = outboxStatus
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     var eventType: EventType = eventType
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2000)
     var payload: String? = payload
 
 }

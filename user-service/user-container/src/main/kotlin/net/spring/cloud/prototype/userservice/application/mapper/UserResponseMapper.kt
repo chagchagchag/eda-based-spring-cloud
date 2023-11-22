@@ -1,6 +1,6 @@
 package net.spring.cloud.prototype.userservice.application.mapper
 
-import net.spring.cloud.prototype.userservice.domain.dto.UserDto
+import net.spring.cloud.prototype.userservice.dataaccess.dto.UserDto
 import net.spring.cloud.prototype.userservice.application.valueobject.LoginResponse
 import net.spring.cloud.prototype.userservice.application.valueobject.ReadUserResponse
 import net.spring.cloud.prototype.userservice.application.valueobject.SignupResponse

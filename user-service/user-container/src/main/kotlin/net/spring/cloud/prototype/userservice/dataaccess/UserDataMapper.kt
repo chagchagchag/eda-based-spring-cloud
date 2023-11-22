@@ -1,7 +1,7 @@
 package net.spring.cloud.prototype.userservice.dataaccess
 
 import net.spring.cloud.prototype.userservice.dataaccess.entity.UserEntity
-import net.spring.cloud.prototype.userservice.domain.dto.UserDto
+import net.spring.cloud.prototype.userservice.dataaccess.dto.UserDto
 import net.spring.cloud.prototype.userservice.application.valueobject.inflearn.ResponseOrder
 import net.spring.cloud.prototype.userservice.application.valueobject.inflearn.ResponseUser
 import org.springframework.stereotype.Component

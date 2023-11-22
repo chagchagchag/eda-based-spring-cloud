@@ -7,7 +7,7 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import jakarta.servlet.http.HttpServletResponse
 import net.spring.cloud.prototype.userservice.config.security.userdetails.CustomUserDetails
-import net.spring.cloud.prototype.userservice.domain.dto.UserDto
+import net.spring.cloud.prototype.userservice.dataaccess.dto.UserDto
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import java.security.Key
