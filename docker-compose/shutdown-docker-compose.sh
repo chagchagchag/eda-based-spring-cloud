@@ -6,4 +6,6 @@ cd mysql
 docker-compose down
 cd ..
 
+cd web-service
 docker-compose down
+cd ..
