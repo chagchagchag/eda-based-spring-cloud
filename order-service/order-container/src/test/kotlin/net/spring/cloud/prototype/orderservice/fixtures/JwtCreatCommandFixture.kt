@@ -11,11 +11,11 @@ class JwtCreatCommandFixture {
 
         val faker = Faker()
 
-        fun randomJwtCreateUserCommand(plainPassword: String, passwordEncoder: PasswordEncoder)
+        fun randomJwtCreateUserCommand(username: String, plainPassword: String, passwordEncoder: PasswordEncoder)
         : JwtCreateCommand {
             return JwtCreateCommand(
-                email = "asdf@dev.com",
-                name = faker.artist.names(),
+                email = "$username@dev.com",
+                name = username,
                 encryptedPassword = passwordEncoder.encode(plainPassword),
                 id = UlidCreator.monotonicUuid(),
                 createdAt = OffsetDateTime.now(),

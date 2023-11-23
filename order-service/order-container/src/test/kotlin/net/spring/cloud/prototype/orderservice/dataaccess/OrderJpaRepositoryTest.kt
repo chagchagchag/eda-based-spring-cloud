@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.transaction.annotation.Transactional
 
-@ActiveProfiles("docker-mysql")
+@ActiveProfiles("local-docker")
 @Transactional
 @SpringBootTest
 class OrderJpaRepositoryTest {
