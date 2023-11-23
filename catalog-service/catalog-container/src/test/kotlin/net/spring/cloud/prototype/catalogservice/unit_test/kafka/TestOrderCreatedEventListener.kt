@@ -19,7 +19,7 @@ class TestOrderCreatedEventListener(
 
     @KafkaListener(
         id = "order-created-topic-test-consumer",
-        topics = ["order-created-event-test"]
+        topics = ["order-created-event-test-embedded"]
     )
     override fun listenOrderCreatedEvent(messages: List<String>) {
         messageList = messages

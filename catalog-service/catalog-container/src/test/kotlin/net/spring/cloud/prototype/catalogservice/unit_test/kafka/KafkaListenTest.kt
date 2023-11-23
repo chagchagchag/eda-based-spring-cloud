@@ -13,21 +13,23 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.kafka.test.context.EmbeddedKafka
 import org.springframework.test.annotation.DirtiesContext
+import org.springframework.test.context.ActiveProfiles
 
+@ActiveProfiles("embedded")
 @SpringBootTest
 @DirtiesContext
 @EmbeddedKafka(
     partitions = 1,
     brokerProperties = [
-        "listeners=PLAINTEXT://localhost:9092",
-        "port=9092"
+        "listeners=PLAINTEXT://localhost:39092",
+        "port=39092"
     ]
 )
 class KafkaListenTest {
 
     private val logger: Logger = LoggerFactory.getLogger(javaClass)
 
-    val orderCreatedTopic = "order-created-event-test"
+    val orderCreatedTopic = "order-created-event-test-embedded"
 
     @Autowired
     private lateinit var kafkaStringProducer: KafkaStringProducer
