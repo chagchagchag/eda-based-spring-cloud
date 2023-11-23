@@ -13,21 +13,23 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.kafka.test.context.EmbeddedKafka
 import org.springframework.test.annotation.DirtiesContext
+import org.springframework.test.context.ActiveProfiles
 
+@ActiveProfiles("embedded")
 @SpringBootTest
 @DirtiesContext
 @EmbeddedKafka(
     partitions = 1,
     brokerProperties = [
-        "listeners=PLAINTEXT://localhost:9092",
-        "port=9092"
+        "listeners=PLAINTEXT://localhost:39092",
+        "port=39092"
     ]
 )
 class KafkaListenTest {
 
     private val logger: Logger = LoggerFactory.getLogger(javaClass)
 
-    val orderCreatedTopic = "order-created-event-test"
+    val orderCreatedTopic = "order-created-event-test-embedded"
 
     @Autowired
     private lateinit var kafkaStringProducer: KafkaStringProducer
@@ -49,20 +51,17 @@ class KafkaListenTest {
         //  event 데이터를 카프카의 'order-created-event-test' 토픽으로 전송
         kafkaStringProducer.send(orderCreatedTopic, orderCreatedEvent.sagaId.toString(), eventString)
         Thread.sleep(3000)
-        logger.info(">>> 데이터 수신 완료 :: ${testOrderCreatedEventListener.messageList}")
-        val messageList = testOrderCreatedEventListener.messageList
+        logger.info(">>> 데이터 수신 완료 :: ${testOrderCreatedEventListener.received}")
+        val received = testOrderCreatedEventListener.received
 
         // then
-        assertThat(messageList.size).isEqualTo(1)
-        messageList.forEach { message ->
-            val event = testObjectMapper.readValue<OrderCreatedEvent>(message, OrderCreatedEvent::class.java)
-            assertThat(event.sagaId).isEqualTo(orderCreatedEvent.sagaId)
-            assertThat(event.orderId).isEqualTo(orderCreatedEvent.orderId)
-            assertThat(event.productId).isEqualTo(orderCreatedEvent.productId)
-            assertThat(event.totalPrice).isEqualTo(orderCreatedEvent.totalPrice)
-            assertThat(event.unitPrice).isEqualTo(orderCreatedEvent.unitPrice)
-            assertThat(event.createdAt).isEqualTo(orderCreatedEvent.createdAt)
-        }
+        val event = testObjectMapper.readValue<OrderCreatedEvent>(received, OrderCreatedEvent::class.java)
+        assertThat(event.sagaId).isEqualTo(orderCreatedEvent.sagaId)
+        assertThat(event.orderId).isEqualTo(orderCreatedEvent.orderId)
+        assertThat(event.productId).isEqualTo(orderCreatedEvent.productId)
+        assertThat(event.totalPrice).isEqualTo(orderCreatedEvent.totalPrice)
+        assertThat(event.unitPrice).isEqualTo(orderCreatedEvent.unitPrice)
+        assertThat(event.createdAt).isEqualTo(orderCreatedEvent.createdAt)
     }
 
 }
