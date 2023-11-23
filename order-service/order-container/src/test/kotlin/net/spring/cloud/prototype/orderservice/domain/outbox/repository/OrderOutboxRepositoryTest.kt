@@ -11,25 +11,13 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.transaction.annotation.Transactional
 
-@ActiveProfiles("docker-mysql")
+@ActiveProfiles("local-docker")
 @SpringBootTest
 @Transactional
 class OrderOutboxRepositoryTest {
 
     @Autowired
     private lateinit var orderOutboxRepository: OrderOutboxRepository
-
-//    private val mySQLContainer = MySQLContainer("mysql:8")
-//
-//    @BeforeEach
-//    fun init(){
-//        mySQLContainer.start()
-//    }
-//
-//    @AfterEach
-//    fun destroy(){
-//        mySQLContainer.stop()
-//    }
 
     @Test
     @DisplayName("(SQL 검증) OrderOutboxRepository 의 findAllCreatedOrderEvent() 쿼리 검증")

@@ -1,13 +1,11 @@
 server:
-  port: 8085
+  port: 28085
 
 spring:
-  application:
-    name: order-service
   config:
     import:
-      - classpath:local-docker-mysql.yml
-      - classpath:local-docker-kafka.yml
+      - classpath:test-local-docker-mysql.yml
+      - classpath:test-local-docker-kafka.yml
       - classpath:custom-kafka-properties.yml
 
 eureka:
