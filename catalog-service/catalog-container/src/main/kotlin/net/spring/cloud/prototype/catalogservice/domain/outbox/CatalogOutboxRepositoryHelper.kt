@@ -15,4 +15,9 @@ class CatalogOutboxRepositoryHelper (
     fun findAllCreatedOrderEvent(): List<CatalogOutboxEntity> {
         return catalogOutboxRepository.findAllCreatedOrderEvent(SagaStatus.CREATED, OutboxStatus.CREATED)
     }
+
+    @Transactional
+    fun save(catalogOutboxEntity: CatalogOutboxEntity){
+        catalogOutboxRepository.save(catalogOutboxEntity)
+    }
 }

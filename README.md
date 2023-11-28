@@ -46,7 +46,13 @@
 
 ### 현재 진행중인 개발 내용 (2023.11\~)
 
-> 10월 말 \~ 11월 초에 코딩테스트, 인적성 시험 전형이 있었는데 이 과정에 잠시 작업을 멈춰두게 되었고 지금 작업을 시작 중입니다. 11월 23일 내로 기능을 완성할 것 같고 기능확인, 테스트코드에 대한 내용들을 정리할 수 있을 것으로 보입니다.
+> 10월 말 \~ 11월 초에 코딩테스트, 인적성 시험 전형이 있었고 시험공부, 코딩테스트로 인한 수면부족으로 인해... 11월 중순까지 번아웃 + 슬럼프 + 신체리듬 후폭풍을 겪으며 조금 쉬다가 구현을 시작했었는데, 우여곡절 끝에 기본적인 기능들을 모두 완료된 상태입니다. <br>
+>
+> 지금 현재는 테스트 코드 작성을 통해 코드 구조전환을 하거나 에러 검출 등의 작업을 하고 있습니다. <br>
+>
+> 다만, 테스트 코드 작성 중에 잠시 멈추고 통합테스트를 위해 별도의 wiremock 테스트를 하기 위한 기능을 스터디 중 입니다. 수동테스트(카프카 띄워두고 콘솔컨슈머로 데이터 연동여부 확인 등 모든 기능을 수작업으로 테스트)하는 과정을 거치는 것을 개발 완료로 간주했을 때 아마도 12월 중순...쿨럭.... 이때 쯤 모든 기능이 완료될 듯 합니다.ㅠㅠ<br>
+>
+> 개발 문서들(ERD, 시퀀스 다이어그램, 플로우차트) 공개는 조금 나중에 하게 될 듯 합니다.<br>
 
 <br>
 
@@ -126,6 +132,12 @@ Scheduler(Catalogue Service) → Catalogue 데이터베이스
   - 이 책이 유명하다고 하는데 아직은 읽어보지 못했습니다.......
 
 <br>
+
+
+
+### 2023.12 ~ 
+
+
 
 
 
@@ -252,6 +264,64 @@ catalog-container (모듈)
 <br>
 
 <img src="./img/catalog-service.png" width="60%" height="60%"/>
+
+<br>
+
+
+
+#### 자주 사용된 코드 작성 원칙
+
+##### 프록시 객체
+
+프록시 객체 개념을 소스코드 전반적으로 굉장히 많이 했습니다. 순환참조, 기능 수정시 raw 레벨 기능 수정 방지 등을 목적으로 프록시 역할의 객체를 통해 기능에 접근하도록 대부분의 기능을 정의했습니다.<br>
+
+프록시 객체를 정의할 때 사람에 따라 `-Agent`, `-Helper` 라는 접미사를 붙여서 클래스명을 사용하는데, 저의 경우 모든 프록시 객체를 `-Helper` 라는 접미사를 사용하는 것으로 통일했습니다. <br>
+
+실제 작성한 코드들 대부분은 대리인을 통해 raw 레벨의 기능을 호출하는 구조이지만, 일반적인 다른 Java 라이브러리 들에서 `-Agent` 라는 클래스가 많을것 같아 혼동을 야기할 것 같아서 `-Helper` 라는 접미사로 통일했습니다.<br>
+
+간단하게 예를 들면 아래와 같은 코드입니다.<br>
+
+```kotlin
+@Service
+class CatalogDomainServiceImpl (
+    val catalogOutboxRepositoryHelper: CatalogOutboxRepositoryHelper,
+    val orderCreatedEventFactory: OrderCreatedEventFactory,
+): CatalogDomainService {
+
+    @Transactional
+    override fun persistOrderCreatedEvent(eventString: String) {
+        val orderCreatedEvent = orderCreatedEventFactory.fromEventString(eventString)
+        val catalogOutboxEntity = orderCreatedEventFactory.toOutboxEntity(orderCreatedEvent)
+        catalogOutboxRepositoryHelper.save(catalogOutboxEntity)
+    }
+
+}
+```
+
+<br>
+
+
+
+CatalogDomainServiceImpl 에서 CatalogOutboxRepository 에 OrderCreatedEvent 를 저장하려고 하는데, 이때 아래의 원칙을 통해 CatalogOutboxRepository에 직접 접근하지 않고 CatalogOutboxRepositoryHelper 에게 요청을 합니다.
+
+- "CatalogOutboxRepository의 save() 가 필요해? 그럼 CatalogOutboxRepositoryHelper에게 save() 를 요청해"
+
+<br>
+
+이렇게 하면 CatalogOutboxRepository 에서 SQL 변경사항이 발생하더라도 CatalogDomainServiceImpl 객체에까지 변경사항이 전파되지는 않습니다. CatalogOutboxRepository 에서 변경사항이 발생하면 CatalogOutboxRepositoryHelper 의 해당 내용만 수정하면 되기 때문입니다.<br>
+
+그리고 프로젝트의 규모가 커지면 커질 수록 새로운 기능 추가 등을 거칠때 순환참조 의존성 문제가 빈번하게 발생하고 이런 문제로 인해 3000줄이 넘는 레거시 코드가 발생하기도 합니다. 이런 증상을 해결하려면 raw 레벨(low(x))의 코드를 감싸는 Wrapper 역할을 하는 프록시 객체를 통해 협상을 하도록 하는 것이 필요합니다.<br>
+
+요약하자면 아래의 두 이유로 인해 이번 사이드 프로젝트 전반적으로 프록시 객체를 기반으로 한 코드를 많이 작성했습니다. 그리고 대부분의 프록시 객체는 `-Helper` 라는 접미사를 가지도록 이름을 통일했습니다.
+
+- 기능의 강결합 문제
+- 순환 참조 의존성 문제
+
+<br>
+
+
+
+##### 생각날 때마다 추가!!! 
 
 <br>
 
