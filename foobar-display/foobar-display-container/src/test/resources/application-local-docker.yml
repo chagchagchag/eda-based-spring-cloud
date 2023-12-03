@@ -1,0 +1,31 @@
+server:
+  port: 0
+  shutdown: graceful
+
+spring:
+  application:
+    name: catalog-service
+  config:
+    import:
+      - classpath:custom-kafka-properties.yml
+      - classpath:test-local-docker-kafka.yml
+      - classpath:test-local-docker-mysql.yml
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+
+logging:
+  level:
+    net.spring.cloud.prototype.orderservice: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, httptrace, info, metrics, prometheus

@@ -15,16 +15,16 @@ class TestOrderCreatedEventListener(
 ) {
     private val logger: Logger = LoggerFactory.getLogger(javaClass)
 
-    lateinit var messageList: List<String>
+    lateinit var received: String
 
     @KafkaListener(
         id = "order-created-topic-test-consumer",
-        topics = ["order-created-event-test"]
+        topics = ["order-created-event-test-embedded"]
     )
-    override fun listenOrderCreatedEvent(messages: List<String>) {
-        messageList = messages
+    override fun listenOrderCreatedEvent(message: String) {
+        received = message
         logger.info("""
-            >>> 테스트 데이터 수신 : $messageList
+            >>> 테스트 데이터 수신 : $received
         """.trimIndent())
     }
 

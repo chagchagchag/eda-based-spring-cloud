@@ -4,20 +4,18 @@ import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jws
 import io.jsonwebtoken.JwtParser
 import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.security.Keys
 import net.spring.cloud.prototype.orderservice.application.OrderApplicationService
 import net.spring.cloud.prototype.orderservice.application.OrderSagaHelper
 import net.spring.cloud.prototype.orderservice.application.mapper.OrderRequestMapper
 import net.spring.cloud.prototype.orderservice.application.valueobject.OrderCreatedResponse
 import net.spring.cloud.prototype.orderservice.application.valueobject.OrderRequest
-import net.spring.cloud.prototype.orderservice.application.valueobject.ResponseOrder
+import net.spring.cloud.prototype.orderservice.auth.key.SecurityProperties
 import org.slf4j.LoggerFactory
 import org.springframework.core.env.Environment
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.nio.charset.StandardCharsets
 import java.security.Key
 
 
@@ -52,8 +50,7 @@ class OrderController (
                 val jwt = headerStr.substring(0, bearerLen)
 
                 // todo 아래 평문 시크릿 프로퍼티스에 공통화해두기 (지금은 시간이 없어서 패스)
-                val secret = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMLOPQRTTTTTTTTT"
-                val key : Key = Keys.hmacShaKeyFor(secret.toByteArray(StandardCharsets.UTF_8))
+                val key : Key = SecurityProperties.key
 
                 val parser: JwtParser = Jwts.parserBuilder()
                     .setSigningKey(key)
@@ -70,13 +67,5 @@ class OrderController (
                     .body(orderCreatedResponse)
             }
             ?: throw IllegalArgumentException("Authorization Header 는 비어있을 수 없습니다.")
-    }
-
-
-    // todo 인프런 코드 변환 필요
-    @GetMapping("/{userId}/orders")
-    fun getOrder(@PathVariable("userId") userId: String) : ResponseEntity<List<ResponseOrder>> {
-        val responseOrders = orderSagaHelper.getOrderByUserId(userId)
-        return ResponseEntity.status(HttpStatus.OK).body(responseOrders)
     }
 }

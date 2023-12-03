@@ -1,0 +1,31 @@
+server:
+  port: 28085
+  shutdown: graceful
+
+spring:
+  application:
+    name: order-service
+  config:
+    import:
+      - classpath:test-local-docker-mysql.yml
+      - classpath:test-local-docker-kafka.yml
+      - classpath:custom-kafka-properties.yml
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+
+logging:
+  level:
+    net.spring.cloud.prototype.orderservice: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, httptrace, info, metrics, prometheus

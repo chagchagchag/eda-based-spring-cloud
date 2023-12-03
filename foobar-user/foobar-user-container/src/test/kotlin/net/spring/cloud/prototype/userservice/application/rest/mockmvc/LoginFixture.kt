@@ -1,6 +1,6 @@
 package net.spring.cloud.prototype.userservice.application.rest.mockmvc
 
-import net.spring.cloud.prototype.userservice.domain.dto.UserDto
+import net.spring.cloud.prototype.userservice.dataaccess.dto.UserDto
 import java.time.LocalDate
 import java.util.UUID
 

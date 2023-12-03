@@ -1,0 +1,6 @@
+version: '3.7'
+
+networks:
+  kafka_msa-prototype:
+#    driver: bridge
+    external: true
