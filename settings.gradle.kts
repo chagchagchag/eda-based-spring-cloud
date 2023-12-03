@@ -21,5 +21,5 @@ include("order-service:order-container")
 include("user-service")
 include("user-service:user-container")
 
-include("catalog-service")
-include("catalog-service:catalog-container")
+include("foobar-display")
+include("foobar-display:foobar-display-container")
