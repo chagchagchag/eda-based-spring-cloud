@@ -37,16 +37,18 @@ allprojects{
     }
 
     dependencies {
-        api(project(":common:common-dataaccess"))
-        api(project(":common:common-domain"))
-//        implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")
-//        implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
-//        implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+        api(project(":foobar-core:foobar-core-dataaccess"))
+        api(project(":foobar-core:foobar-core-domain"))
+        implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")
+        implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+        implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
         implementation("org.springframework.boot:spring-boot-starter-data-jpa")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
-        implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.0")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("org.mockito.kotlin:mockito-kotlin:5.0.0")
+        testImplementation("org.testcontainers:junit-jupiter")
+        testImplementation("org.testcontainers:kafka")
+        testImplementation("org.testcontainers:mysql")
     }
 
     dependencyManagement {

@@ -1,6 +1,6 @@
 FROM openjdk:17-alpine AS jar-image
 WORKDIR deploy
-COPY catalog-container/build/libs/catalog-container-0.0.1-SNAPSHOT.jar catalog-container.jar
+COPY foobar-display-container/build/libs/catalog-container-0.0.1-SNAPSHOT.jar catalog-container.jar
 RUN java -jar -Djarmode=layertools catalog-container.jar extract
 
 FROM openjdk:17-alpine

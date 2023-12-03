@@ -39,8 +39,8 @@ allprojects{
     }
 
     dependencies {
-        api(project(":common:common-dataaccess"))
-        api(project(":common:common-domain"))
+        api(project(":foobar-core:foobar-core-dataaccess"))
+        api(project(":foobar-core:foobar-core-domain"))
         implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")
         implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
         implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")

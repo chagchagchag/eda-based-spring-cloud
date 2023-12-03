@@ -1,9 +1,5 @@
 rootProject.name = "eda_based_spring_cloud"
 
-include("common")
-include("common:common-domain")
-include("common:common-dataaccess")
-
 include("spring-cloud")
 include("spring-cloud:config-service")
 include("spring-cloud:discovery-service")
@@ -15,11 +11,15 @@ include("infrastructure:kafka:kafka-model")
 include("infrastructure:kafka:kafka-consumer")
 include("infrastructure:kafka:kafka-producer")
 
-include("order-service")
-include("order-service:order-container")
+include("foobar-core")
+include("foobar-core:foobar-core-domain")
+include("foobar-core:foobar-core-dataaccess")
 
-include("user-service")
-include("user-service:user-container")
+include("foobar-order")
+include("foobar-order:foobar-order-container")
 
-include("catalog-service")
-include("catalog-service:catalog-container")
+include("foobar-user")
+include("foobar-user:foobar-user-container")
+
+include("foobar-display")
+include("foobar-display:foobar-display-container")

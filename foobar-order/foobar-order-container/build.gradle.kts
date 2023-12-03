@@ -3,7 +3,7 @@ plugins{
 }
 
 dependencies {
-    api(project(":common:common-dataaccess"))
+    api(project(":foobar-core:foobar-core-dataaccess"))
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("io.jsonwebtoken:jjwt-api:0.11.2")
     implementation("io.jsonwebtoken:jjwt-impl:0.11.2")
