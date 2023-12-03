@@ -3,8 +3,8 @@ package net.spring.cloud.prototype.userservice.application
 import net.spring.cloud.prototype.userservice.application.mapper.UserCommandMapper
 import net.spring.cloud.prototype.userservice.dataaccess.repository.UserJpaRepository
 import net.spring.cloud.prototype.userservice.dataaccess.dto.UserDto
-import net.spring.cloud.prototype.userservice.domain.dto.create.SignupUserCommand
 import net.spring.cloud.prototype.userservice.dataaccess.UserDataMapper
+import net.spring.cloud.prototype.userservice.dataaccess.dto.create.SignupUserCommand
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional

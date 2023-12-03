@@ -24,8 +24,8 @@ services:
       - "8000:8000"
 #    networks:
 #      - kafka_msa-prototype
-  user-service-container:
-    image: chagchagchag/user-service-container
+  foobar-user-container:
+    image: chagchagchag/foobar-user-container
     environment:
       spring.cloud.config.uri: http://eda-sample-config-service:9999
       # spring.rabbitmq.host: rabbitmq
@@ -34,8 +34,8 @@ services:
       logging.file: /api-logs/users-ws.log
 #    networks:
 #      - kafka_msa-prototype
-  order-service-container:
-    image: chagchagchag/order-service-container
+  foobar-order-container:
+    image: chagchagchag/foobar-order-container
     environment:
       spring.cloud.config.uri: http://eda-sample-config-service:9999
       # spring.rabbitmq.host: rabbitmq
@@ -44,8 +44,8 @@ services:
       logging.file: /api-logs/users-ws.log
 #    networks:
 #      - kafka_msa-prototype
-  catalog-service-container:
-    image: chagchagchag/catalog-service-container
+  foobar-display-container:
+    image: chagchagchag/foobar-display-container
     environment:
       spring.cloud.config.uri: http://eda-sample-config-service:9999
       # spring.rabbitmq.host: rabbitmq

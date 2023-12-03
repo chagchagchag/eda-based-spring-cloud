@@ -4,11 +4,11 @@ import jakarta.servlet.http.HttpServletResponse
 import net.spring.cloud.prototype.userservice.application.mapper.UserResponseMapper
 import net.spring.cloud.prototype.userservice.config.security.constant.SecurityProperties
 import net.spring.cloud.prototype.userservice.config.security.jwt.JwtProcessor
-import net.spring.cloud.prototype.userservice.domain.dto.create.SignupUserCommand
 import net.spring.cloud.prototype.userservice.application.valueobject.LoginRequest
 import net.spring.cloud.prototype.userservice.application.valueobject.LoginResponse
 import net.spring.cloud.prototype.userservice.application.valueobject.ReadUserResponse
 import net.spring.cloud.prototype.userservice.application.valueobject.SignupResponse
+import net.spring.cloud.prototype.userservice.dataaccess.dto.create.SignupUserCommand
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service

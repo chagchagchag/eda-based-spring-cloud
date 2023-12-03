@@ -9,11 +9,11 @@ services:
       - kafka-broker-2
       - kafka-broker-3
     ports:
-      - "8081:8081"
+      - "9397:9397"
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
-      SCHEMA_REGISTRY_LISTENERS: http://schema-registry:8081
+      SCHEMA_REGISTRY_LISTENERS: http://schema-registry:9397
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka-broker-2:9092,LISTENER_LOCAL://localhost:29092
       SCHEMA_REGISTRY_DEBUG: 'true'
     networks:
@@ -22,7 +22,7 @@ services:
     image: confluentinc/cp-kafka-connect:${KAFKA_VERSION}
     container_name: kafka-connector
     ports:
-      - 8083:8083
+      - 9398:9398
     environment:
       CONNECT_BOOTSTRAP_SERVERS: PLAINTEXT://kafka-broker-2:9092,LISTENER_LOCAL://localhost:29092
       CONNECT_REST_PORT: 8083
@@ -107,7 +107,7 @@ services:
     image: hlebalbau/kafka-manager:stable
     restart: always
     ports:
-      - "9001:9001"
+      - "9090:9090"
     environment:
       ZK_HOSTS: "zookeeper:2181"
     networks:

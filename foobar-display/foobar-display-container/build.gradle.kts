@@ -36,7 +36,7 @@ jib{
     }
 
     to {
-        image = "chagchagchag/catalog-service-container"
+        image = "chagchagchag/foobar-display-container"
         // image tag 는 여러개 지정 가능하다.
         tags = setOf("latest")
     }
