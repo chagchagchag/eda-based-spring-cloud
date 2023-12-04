@@ -7,7 +7,7 @@ spring:
     name: order-service
   config:
     import:
-      - classpath:local-docker-kafka.yml
+      - classpath:local-compose-kafka.yml
       - classpath:local-compose-mysql.yml
       - classpath:local-docker-rabbitmq.yml
       - classpath:custom-kafka-properties.yml
