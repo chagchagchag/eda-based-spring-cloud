@@ -9,6 +9,6 @@ spring:
     producer:
       bootstrap-servers: localhost:19092 # 로컬에서만. 도커에서는 환경변수로.
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
     listener:
       ack-mode: manual

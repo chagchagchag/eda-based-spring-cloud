@@ -77,5 +77,6 @@ services:
       # spring.zipkin.base-url: http://zipkin:9411
       eureka.client.serviceUrl.defaultZone: http://eda-sample-discovery-service:8761/eureka/
       logging.file: /api-logs/users-ws.log
+      SPRING_DATASOURCE_URL: jdbc:mysql://foobar-mysql:3306/catalogs?serverTimezone=UTC&characterEncoding=UTF-8
     networks:
       - foobar-network

@@ -13,6 +13,6 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/orders?serverTimezone=UTC&characterEncoding=UTF-8
+#    url: jdbc:mysql://foobar-network:3306/catalogs?serverTimezone=UTC&characterEncoding=UTF-8
     username: root
     password: test1357
