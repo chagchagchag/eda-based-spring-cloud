@@ -1,5 +1,6 @@
 version: '3.7'
 
 networks:
-  msa-prototype:
-    driver: bridge
+  foobar-network:
+#    driver: bridge
+    external: true

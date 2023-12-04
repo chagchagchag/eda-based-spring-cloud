@@ -48,7 +48,7 @@ services:
     volumes:
       - "./kafka-connect/connectors:/etc/kafka-connect/jars"
     networks:
-      - ${GLOBAL_NETWORK:-kafka}
+      - ${GLOBAL_NETWORK}
   kafka-broker-1:
     image: confluentinc/cp-kafka:${KAFKA_VERSION}
     container_name: kafka-broker-1
@@ -66,7 +66,7 @@ services:
     volumes:
       - "./volumes/kafka/broker-1:/var/lib/kafka/data"
     networks:
-      - ${GLOBAL_NETWORK:-kafka}
+      - ${GLOBAL_NETWORK}
   kafka-broker-2:
     image: confluentinc/cp-kafka:${KAFKA_VERSION}
     container_name: kafka-broker-2
@@ -84,7 +84,7 @@ services:
     volumes:
       - "./volumes/kafka/broker-2:/var/lib/kafka/data"
     networks:
-      - ${GLOBAL_NETWORK:-kafka}
+      - ${GLOBAL_NETWORK}
   kafka-broker-3:
     image: confluentinc/cp-kafka:${KAFKA_VERSION}
     container_name: kafka-broker-3
@@ -102,7 +102,7 @@ services:
     volumes:
       - "./volumes/kafka/broker-3:/var/lib/kafka/data"
     networks:
-      - ${GLOBAL_NETWORK:-kafka}
+      - ${GLOBAL_NETWORK}
   kafka-manager:
     image: hlebalbau/kafka-manager:stable
     restart: always
@@ -111,4 +111,4 @@ services:
     environment:
       ZK_HOSTS: "zookeeper:2181"
     networks:
-      - ${GLOBAL_NETWORK:-kafka}
+      - ${GLOBAL_NETWORK}
