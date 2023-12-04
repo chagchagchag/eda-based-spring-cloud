@@ -1,29 +1,24 @@
 server:
   port: 0
+  shutdown: graceful
 
 spring:
   application:
     name: user-service
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: guest
-    password: guest
-  h2:
-    console:
-      enabled: true
-      settings:
-        web-allow-others: true
-      path: /h2-console
+  config:
+    import:
+      - classpath:local-docker-mysql.yml
+      - classpath:local-docker-rabbitmq.yml
+      - classpath:local-docker-kafka.yml
 
 #eureka:
 #  instance:
 #    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 #  client:
+#    register-with-eureka: true
+#    fetch-registry: true
 #    service-url:
 #      defaultZone: http://127.0.0.1:8761/eureka
-#    fetch-registry: true
-#    register-with-eureka: true
 
 greeting:
   message: "Welcome!"
@@ -31,4 +26,4 @@ greeting:
 logging:
   level:
 #    net.spring.cloud.prototype.userservice.client: DEBUG
-    net.spring.cloud.prototype.userservice: DEBUG
+    net.spring.cloud.prototype.userservice.application: DEBUG
