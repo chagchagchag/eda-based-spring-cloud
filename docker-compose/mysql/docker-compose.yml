@@ -1,15 +1,13 @@
 version: '3.7'
 services:
-  mysql-user-service:
+  foobar-mysql:
     image: mysql:5.7.39-debian
     restart: always
     #    command: --lower_case_table_names=1
-    container_name: mysql-user-service
-    hostname: mysql-user-service
+    container_name: foobar-mysql
+    hostname: foobar-mysql
     networks:
-      - kafka_msa-prototype
-#      - ${GLOBAL_NETWORK:-kafka}
-#      - msa-infra
+      - foobar-network
     ports:
       - "3306:3306"
     environment:
@@ -26,6 +24,6 @@ services:
     volumes:
       - ./init/:/docker-entrypoint-initdb.d/
 networks:
-  kafka_msa-prototype:
+  foobar-network:
     external: true
 #    driver: bridge
