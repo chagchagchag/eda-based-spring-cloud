@@ -7,9 +7,8 @@ spring:
     name: user-service
   config:
     import:
-      - classpath:local-docker-mysql.yml
-      - classpath:local-docker-rabbitmq.yml
-      - classpath:local-docker-kafka.yml
+      - classpath:local-compose-mysql.yml
+      - classpath:local-compose-kafka.yml
 
 #eureka:
 #  instance:

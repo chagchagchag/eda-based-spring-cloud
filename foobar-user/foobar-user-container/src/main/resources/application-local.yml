@@ -8,7 +8,6 @@ spring:
   config:
     import:
       - classpath:local-docker-mysql.yml
-      - classpath:local-docker-rabbitmq.yml
       - classpath:local-docker-kafka.yml
 
 #eureka:
