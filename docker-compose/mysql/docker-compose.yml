@@ -6,8 +6,6 @@ services:
     #    command: --lower_case_table_names=1
     container_name: foobar-mysql
     hostname: foobar-mysql
-    networks:
-      - foobar-network
     ports:
       - "3306:3306"
     environment:
@@ -23,6 +21,8 @@ services:
       - --collation-server=utf8mb4_unicode_ci
     volumes:
       - ./init/:/docker-entrypoint-initdb.d/
+    networks:
+      - foobar-network
 networks:
   foobar-network:
     external: true

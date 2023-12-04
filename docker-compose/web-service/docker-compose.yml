@@ -1,18 +1,41 @@
 services:
+  foobar-mysql:
+    image: mysql:5.7.39-debian
+    restart: always
+    #    command: --lower_case_table_names=1
+    container_name: foobar-mysql
+    hostname: foobar-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_USER=user
+      - MYSQL_USER_HOST=%
+      - MYSQL_PASSWORD=test1357
+      - MYSQL_DATABASE=my_db
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_PASSWORD=test1357
+      - TZ=Asia/Seoul
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./init/:/docker-entrypoint-initdb.d/
+    networks:
+      - foobar-network
   eda-sample-discovery-service:
     image: chagchagchag/eda-sample-discovery-service
     container_name: eda-sample-discovery-service
     ports:
       - "8761:8761"
 #    networks:
-#      - kafka_msa-prototype
+#      - foobar-network
   eda-sample-config-service:
     image: chagchagchag/eda-sample-config-service
     container_name: eda-sample-config-service
     ports:
       - "9999:9999"
 #    networks:
-#      - kafka_msa-prototype
+#      - foobar-network
   eda-sample-api-gateway:
     image: chagchagchag/eda-sample-api-gateway
     container_name: eda-sample-api-gateway
@@ -23,7 +46,7 @@ services:
     ports:
       - "8000:8000"
 #    networks:
-#      - kafka_msa-prototype
+#      - foobar-network
   foobar-user-container:
     image: chagchagchag/foobar-user-container
     environment:
@@ -32,8 +55,9 @@ services:
       # spring.zipkin.base-url: http://zipkin:9411
       eureka.client.serviceUrl.defaultZone: http://eda-sample-discovery-service:8761/eureka/
       logging.file: /api-logs/users-ws.log
-#    networks:
-#      - kafka_msa-prototype
+      SPRING_DATASOURCE_URL: jdbc:mysql://foobar-mysql:3306/users?serverTimezone=UTC&characterEncoding=UTF-8
+    networks:
+      - foobar-network
   foobar-order-container:
     image: chagchagchag/foobar-order-container
     environment:
@@ -42,8 +66,9 @@ services:
       # spring.zipkin.base-url: http://zipkin:9411
       eureka.client.serviceUrl.defaultZone: http://eda-sample-discovery-service:8761/eureka/
       logging.file: /api-logs/users-ws.log
-#    networks:
-#      - kafka_msa-prototype
+      SPRING_DATASOURCE_URL: jdbc:mysql://foobar-mysql:3306/orders?serverTimezone=UTC&characterEncoding=UTF-8
+    networks:
+      - foobar-network
   foobar-display-container:
     image: chagchagchag/foobar-display-container
     environment:
@@ -52,5 +77,5 @@ services:
       # spring.zipkin.base-url: http://zipkin:9411
       eureka.client.serviceUrl.defaultZone: http://eda-sample-discovery-service:8761/eureka/
       logging.file: /api-logs/users-ws.log
-#    networks:
-#      - kafka_msa-prototype
+    networks:
+      - foobar-network

@@ -1,14 +1,5 @@
-cd kafka
-source shutdown-kafka-compose.sh
-cd ..
-
-#cd mysql
-#docker-compose down
-#cd ..
-
-cd web-service
-source shutdown-web-service-compose.sh
-cd ..
+rm -rf volumes
+docker-compose -f common.yml -f docker-compose.yml down
 
 cnt_foobar_network=`docker network ls --filter name=foobar-network | wc -l`
 cnt_foobar_network=$(($cnt_foobar_network -1))
