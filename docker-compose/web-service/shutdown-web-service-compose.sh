@@ -1,6 +1,5 @@
 rm -rf volumes
-docker-compose -f common.yml -f kafka_cluster.yml down
-docker-compose -f common.yml -f zookeeper.yml down
+docker-compose -f common.yml -f docker-compose.yml down
 
 cnt_foobar_network=`docker network ls --filter name=foobar-network | wc -l`
 cnt_foobar_network=$(($cnt_foobar_network -1))

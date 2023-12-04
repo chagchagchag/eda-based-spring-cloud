@@ -34,7 +34,7 @@ services:
   #    volumes:
   #      - "./volumes/connector/debezium-connector-schemaregistry-7.2.5:/kafka/connect/debezium-connector-schemaregistry-7.2.5"
   #    networks:
-  #      - ${GLOBAL_NETWORK:-kafka}
+  #      - ${GLOBAL_NETWORK}
   kafka-debezium-connector:
     image: debezium/connect:1.9
     ports:
@@ -59,7 +59,7 @@ services:
     volumes:
       - "./connector/debezium-connector-schemaregistry-7.2.5:/kafka/connect/debezium-connector-schemaregistry-7.2.5"
     networks:
-      - ${GLOBAL_NETWORK:-kafka}
+      - ${GLOBAL_NETWORK}
 #  kafka-connect:
 #    image: confluentinc/cp-kafka-connect:6.2.1
 #    hostname: kafka-connect
@@ -87,7 +87,7 @@ services:
 #    volumes:
 #      - ./volumes/kafka-connect:/etc/kafka-connect/jars
 #    networks:
-#      - ${GLOBAL_NETWORK:-kafka}
+#      - ${GLOBAL_NETWORK}
 
   kafka-ui:
     container_name: kafka-ui
@@ -99,4 +99,4 @@ services:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-broker-1:9092,kafka-broker-2:9092,kafka-broker-3:9092
     networks:
-      - ${GLOBAL_NETWORK:-kafka}
+      - ${GLOBAL_NETWORK}

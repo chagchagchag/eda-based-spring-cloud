@@ -7,6 +7,4 @@ then
   docker network create foobar-network
 fi
 
-docker-compose -f common.yml -f zookeeper.yml up -d
-docker-compose -f common.yml -f kafka_cluster.yml up -d
-#docker-compose -f common.yml -f kafka_connect.yml up -d
+docker-compose -f common.yml -f docker-compose.yml up -d

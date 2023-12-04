@@ -1,4 +1,4 @@
-package net.spring.cloud.prototype.userservice.domain.dto.create
+package net.spring.cloud.prototype.userservice.dataaccess.dto.create
 
 import java.time.LocalDate
 

@@ -1,7 +1,7 @@
 package net.spring.cloud.prototype.userservice.application.mapper
 
+import net.spring.cloud.prototype.userservice.dataaccess.dto.create.SignupUserCommand
 import net.spring.cloud.prototype.userservice.dataaccess.entity.UserEntity
-import net.spring.cloud.prototype.userservice.domain.dto.create.SignupUserCommand
 import org.springframework.stereotype.Component
 
 @Component

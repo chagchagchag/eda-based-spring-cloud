@@ -11,14 +11,14 @@ cd ..
 ./gradlew :spring-cloud:discovery-service:jibDockerBuild
 ./gradlew :spring-cloud:discovery-service:jib
 
-./gradlew :user-service:user-container:clean
-./gradlew :user-service:user-container:jibDockerBuild
-./gradlew :user-service:user-container:jib
+./gradlew :foobar-user:foobar-user-container:clean
+./gradlew :foobar-user:foobar-user-container:jibDockerBuild
+./gradlew :foobar-user:foobar-user-container:jib
 
-./gradlew :order-service:order-container:clean
-./gradlew :order-service:order-container:jibDockerBuild
-./gradlew :order-service:order-container:jib
+./gradlew :foobar-order:foobar-order-container:clean
+./gradlew :foobar-order:foobar-order-container:jibDockerBuild
+./gradlew :foobar-order:foobar-order-container:jib
 
-./gradlew :catalog-service:catalog-container:clean
-./gradlew :catalog-service:catalog-container:jibDockerBuild
-./gradlew :catalog-service:catalog-container:jib
+./gradlew :foobar-display:foobar-display-container:clean
+./gradlew :foobar-display:foobar-display-container:jibDockerBuild
+./gradlew :foobar-display:foobar-display-container:jib
