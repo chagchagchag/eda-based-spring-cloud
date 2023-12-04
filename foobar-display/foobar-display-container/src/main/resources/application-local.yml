@@ -9,7 +9,6 @@ spring:
       - classpath:local-docker-kafka.yml
       - classpath:local-docker-mysql.yml
       - classpath:custom-kafka-properties.yml
-
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
