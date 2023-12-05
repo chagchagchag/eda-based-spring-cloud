@@ -21,7 +21,9 @@ tasks.getByName("jar"){
 }
 
 jib{
-    val profile : String = project.findProperty("env") as? String ?: "local"
+    val profile : String = System.getenv("COMPOSE_SPRING_PROFILES_ACTIVE") as? String ?: "local"
+    val kafkaBootstrapServers : String = System.getenv("COMPOSE_SPRING_KAFKA_BOOTSTRAP_SERVERS") as? String ?: "localhost:19091"
+    val datasourceUrl : String = System.getenv("COMPOSE_SPRING_DATASOURCE_URL") as? String ?: "localhost:3306"
 
     from {
         image = "amazoncorretto:17"
@@ -46,8 +48,14 @@ jib{
 
         // jvm 옵션
         jvmFlags = listOf(
-            "-Dspring.profiles.active=local",
+            "-Dspring.profiles.active=${profile}",
+            "-Dspring.kafka.consumer.bootstrap-servers=${kafkaBootstrapServers}",
+            "-Dspring.kafka.producer.bootstrap-servers=${kafkaBootstrapServers}",
+            "-Dspring.datasource.url=${datasourceUrl}",
             "-XX:+UseContainerSupport",
+//            "-XX:+UseG1GC",
+//            "-verbose:gc",
+//            "-XX:+PrintGCDetails",
             "-Dserver.port=8080",
             "-Dfile.encoding=UTF-8",
         )
