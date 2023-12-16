@@ -45,7 +45,7 @@ tasks.getByName("jar"){
 }
 
 jib{
-    val profile : String = project.findProperty("env") as? String ?: "local"
+    val profile : String = System.getenv("SPRING_PROFILES_ACTIVE") as? String ?: "local"
 
     from {
         image = "amazoncorretto:17"
@@ -70,7 +70,7 @@ jib{
 
         // jvm 옵션
         jvmFlags = listOf(
-            "-Dspring.profiles.active=local",
+            "-Dspring.profiles.active=${profile}",
             "-XX:+UseContainerSupport",
             "-Dserver.port=8080",
             "-Dfile.encoding=UTF-8",

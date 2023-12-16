@@ -1,0 +1,55 @@
+name: spring cloud containers build for push event
+
+env:
+  JIB_CONTAINER_PROFILE: compose
+
+on:
+  push:
+    branches:
+      - refactoring/0.0.1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: JDK 17 Setting
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.17
+
+      - name: Permission Setting
+        run: chmod +x gradlew
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKER_HUB_ID }}
+          password: ${{ secrets.DOCKER_HUB_PW }}
+
+      - name: jib build
+        run: |
+          ./gradlew :spring-cloud:api-gateway:clean
+          ./gradlew :spring-cloud:api-gateway:jibDockerBuild
+          ./gradlew :spring-cloud:api-gateway:jib
+          
+          ./gradlew :spring-cloud:config-service:clean
+          ./gradlew :spring-cloud:config-service:jibDockerBuild
+          ./gradlew :spring-cloud:config-service:jib
+          
+          ./gradlew :spring-cloud:discovery-service:clean
+          ./gradlew :spring-cloud:discovery-service:jibDockerBuild
+          ./gradlew :spring-cloud:discovery-service:jib
+          
+          ./gradlew :foobar-user:foobar-user-container:clean
+          ./gradlew :foobar-user:foobar-user-container:jibDockerBuild
+          ./gradlew :foobar-user:foobar-user-container:jib
+          
+          ./gradlew :foobar-order:foobar-order-container:clean
+          ./gradlew :foobar-order:foobar-order-container:jibDockerBuild
+          ./gradlew :foobar-order:foobar-order-container:jib
+          
+          ./gradlew :foobar-display:foobar-display-container:clean
+          ./gradlew :foobar-display:foobar-display-container:jibDockerBuild
+          ./gradlew :foobar-display:foobar-display-container:jib
