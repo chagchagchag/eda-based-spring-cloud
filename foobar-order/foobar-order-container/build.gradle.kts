@@ -28,7 +28,7 @@ tasks.getByName("jar"){
 }
 
 jib{
-    val profile : String = System.getenv("COMPOSE_SPRING_PROFILES_ACTIVE") as? String ?: "local"
+    val profile : String = System.getenv("JIB_CONTAINER_PROFILE") as? String ?: "local"
     val kafkaBootstrapServers : String = System.getenv("COMPOSE_SPRING_KAFKA_BOOTSTRAP_SERVERS") as? String ?: "localhost:19091"
     val datasourceUrl : String = System.getenv("COMPOSE_SPRING_DATASOURCE_URL") as? String ?: "localhost:3306"
 
