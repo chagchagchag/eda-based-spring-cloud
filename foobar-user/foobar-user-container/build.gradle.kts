@@ -51,7 +51,7 @@ jib{
             "-Dspring.profiles.active=${profile}",
             "-Dspring.kafka.consumer.bootstrap-servers=${kafkaBootstrapServers}",
             "-Dspring.kafka.producer.bootstrap-servers=${kafkaBootstrapServers}",
-            "-Dspring.datasource.url=${datasourceUrl}",
+//            "-Dspring.datasource.url=${datasourceUrl}",
             "-XX:+UseContainerSupport",
             "-XX:+UseG1GC",
             "-verbose:gc",
