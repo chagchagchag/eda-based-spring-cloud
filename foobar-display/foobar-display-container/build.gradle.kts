@@ -53,15 +53,15 @@ jib{
             "-Dspring.kafka.producer.bootstrap-servers=${kafkaBootstrapServers}",
             "-Dspring.datasource.url=${datasourceUrl}",
             "-XX:+UseContainerSupport",
-//            "-XX:+UseG1GC",
-//            "-verbose:gc",
-//            "-XX:+PrintGCDetails",
+            "-XX:+UseG1GC",
+            "-verbose:gc",
+            "-XX:+PrintGCDetails",
             "-Dserver.port=8080",
             "-Dfile.encoding=UTF-8",
         )
 
         // 컨테이너 입장에서 외부로 노출할 포트
-        ports = listOf("8080")
+//        ports = listOf("8080")
 
         labels = mapOf(
             "maintainer" to "chagachagchag.dev@gmail.com"
