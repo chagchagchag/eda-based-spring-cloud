@@ -45,7 +45,8 @@ tasks.getByName("jar"){
 }
 
 jib{
-    val profile : String = System.getenv("SPRING_PROFILES_ACTIVE") as? String ?: "local"
+//    val profile : String = System.getenv("SPRING_PROFILES_ACTIVE") as? String ?: "local"
+    val profile = "local"
 
     from {
         image = "amazoncorretto:17"
