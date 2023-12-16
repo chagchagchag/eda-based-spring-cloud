@@ -2,14 +2,23 @@ plugins{
     id("com.google.cloud.tools.jib") version "3.4.0"
 }
 
+extra["springCloudVersion"] = "2022.0.4"
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     implementation("io.jsonwebtoken:jjwt-api:0.11.2")
     implementation("io.jsonwebtoken:jjwt-impl:0.11.2")
     implementation("io.jsonwebtoken:jjwt-jackson:0.11.2")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.boot:spring-boot-starter-web")
     testImplementation("org.springframework.security:spring-security-test")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+    }
 }
 
 tasks.getByName("bootJar"){
