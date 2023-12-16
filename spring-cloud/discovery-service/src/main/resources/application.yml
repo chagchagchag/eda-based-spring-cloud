@@ -6,6 +6,12 @@ spring:
     name: discovery-service
 
 eureka:
+  instance:
+    #    hostname: eureka-server
+    lease-expiration-duration-in-seconds: 30
+    lease-renewal-interval-in-seconds: 30
+  server:
+    enable-self-preservation: false
   client:
     register-with-eureka: false
     fetch-registry: false
