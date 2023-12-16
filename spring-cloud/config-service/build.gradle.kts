@@ -11,9 +11,12 @@ dependencyManagement {
 }
 
 dependencies{
-//    implementation("org.springframework.cloud:spring-cloud-starter")
     implementation("org.springframework.cloud:spring-cloud-config-server")
-//    implementation("org.springframework.cloud:spring-cloud-starter-bootstrap'")
+    implementation("org.springframework.cloud:spring-cloud-starter-config")
+    implementation("org.springframework.cloud:spring-cloud-starter-bootstrap")
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 tasks.getByName("bootJar"){
@@ -25,7 +28,8 @@ tasks.getByName("jar"){
 }
 
 jib{
-    val profile : String = project.findProperty("env") as? String ?: "local"
+//    val profile : String = project.findProperty("env") as? String ?: "local"
+    val profile = "local"
 
     from {
         image = "amazoncorretto:17"
@@ -50,7 +54,7 @@ jib{
 
         // jvm 옵션
         jvmFlags = listOf(
-            "-Dspring.profiles.active=local",
+            "-Dspring.profiles.active=${profile}",
             "-XX:+UseContainerSupport",
             "-Dserver.port=9999",
             "-Dfile.encoding=UTF-8",
