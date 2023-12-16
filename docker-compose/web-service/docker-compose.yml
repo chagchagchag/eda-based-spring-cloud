@@ -25,6 +25,7 @@ services:
   eda-sample-discovery-service:
     image: chagchagchag/eda-sample-discovery-service
     container_name: eda-sample-discovery-service
+    hostname: eda-sample-discovery-service
     ports:
       - "8761:8761"
     networks:
@@ -32,6 +33,7 @@ services:
   eda-sample-config-service:
     image: chagchagchag/eda-sample-config-service
     container_name: eda-sample-config-service
+    hostname: eda-sample-config-service
     ports:
       - "9999:9999"
     networks:
@@ -39,6 +41,7 @@ services:
   eda-sample-api-gateway:
     image: chagchagchag/eda-sample-api-gateway
     container_name: eda-sample-api-gateway
+    hostname: eda-sample-api-gateway
     environment:
 #      spring.config.import: http://eda-sample-config-service:9999
       spring.cloud.config.uri: http://eda-sample-config-service:9999
@@ -90,6 +93,5 @@ services:
       COMPOSE_SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-broker-1:19092,kafka-broker-2:29092,kafka-broker-3:39092
       COMPOSE_SPRING_PROFILES_ACTIVE: compose
       SPRING_PROFILES_ACTIVE: compose
-#      SPRING_KAFKA_CONSUMER_BOOTSTRAP-SERVERS:
     networks:
       - foobar-network

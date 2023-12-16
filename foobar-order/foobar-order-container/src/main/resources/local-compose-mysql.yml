@@ -14,5 +14,6 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     #    url: jdbc:mysql://mysql-user-service:3306/orders?serverTimezone=UTC&characterEncoding=UTF-8
+    url: ${COMPOSE_SPRING_DATASOURCE_URL}
     username: root
     password: test1357

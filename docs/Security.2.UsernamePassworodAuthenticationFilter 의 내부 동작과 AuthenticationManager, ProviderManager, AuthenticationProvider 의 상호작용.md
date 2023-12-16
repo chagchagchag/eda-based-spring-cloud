@@ -128,7 +128,7 @@ LDAP 인증요청,  중앙집중형 Authentication 서버가 있다든지, 상�
 
 > AuthenticationProvider 를 implements 해서 커스터마이징하는 것에 대해서는 [Spring Security Authentication Provider](https://www.baeldung.com/spring-security-authentication-provider) 를 참고하자.
 
-<img src="https://prod-acb5.kxcdn.com/wp-content/uploads/2019/09/Spring-Security-Architecture-.png.webp" width="60%" height="60%"/>
+<img src="https://prod-acb5.kxcdn.com/wp-content/uploads/2019/09/Spring-Security-Architecture-.png.webp" width="100%" height="100%"/>
 
 <br>
 

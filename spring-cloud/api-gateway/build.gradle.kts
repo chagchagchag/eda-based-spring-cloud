@@ -45,7 +45,7 @@ tasks.getByName("jar"){
 }
 
 jib{
-    val profile : String = project.findProperty("env") as? String ?: "local"
+    val profile : String = System.getenv("SPRING_PROFILES_ACTIVE") as? String ?: "local"
 
     from {
         image = "amazoncorretto:17"
@@ -70,14 +70,14 @@ jib{
 
         // jvm 옵션
         jvmFlags = listOf(
-            "-Dspring.profiles.active=local",
+            "-Dspring.profiles.active=${profile}",
             "-XX:+UseContainerSupport",
-            "-Dserver.port=8080",
+            "-Dserver.port=8000",
             "-Dfile.encoding=UTF-8",
         )
 
         // 컨테이너 입장에서 외부로 노출할 포트
-        ports = listOf("8080")
+        ports = listOf("8000")
 
         labels = mapOf(
             "maintainer" to "chagachagchag.dev@gmail.com"

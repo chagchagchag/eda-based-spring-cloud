@@ -2,14 +2,23 @@ plugins{
     id("com.google.cloud.tools.jib") version "3.4.0"
 }
 
+extra["springCloudVersion"] = "2022.0.4"
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     implementation("io.jsonwebtoken:jjwt-api:0.11.2")
     implementation("io.jsonwebtoken:jjwt-impl:0.11.2")
     implementation("io.jsonwebtoken:jjwt-jackson:0.11.2")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.boot:spring-boot-starter-web")
     testImplementation("org.springframework.security:spring-security-test")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+    }
 }
 
 tasks.getByName("bootJar"){
@@ -21,8 +30,8 @@ tasks.getByName("jar"){
 }
 
 jib{
-    val profile : String = System.getenv("COMPOSE_SPRING_PROFILES_ACTIVE") as? String ?: "local"
-    val kafkaBootstrapServers : String = System.getenv("COMPOSE_SPRING_KAFKA_BOOTSTRAP_SERVERS") as? String ?: "localhost:19091"
+    val profile : String = System.getenv("JIB_CONTAINER_PROFILE") as? String ?: "local"
+    val kafkaBootstrapServers : String = System.getenv("CONTAINER_SPRING_KAFKA_BOOTSTRAP_SERVERS") as? String ?: "localhost:19091"
     val datasourceUrl : String = System.getenv("COMPOSE_SPRING_DATASOURCE_URL") as? String ?: "localhost:3306"
 
     from {
@@ -51,17 +60,17 @@ jib{
             "-Dspring.profiles.active=${profile}",
             "-Dspring.kafka.consumer.bootstrap-servers=${kafkaBootstrapServers}",
             "-Dspring.kafka.producer.bootstrap-servers=${kafkaBootstrapServers}",
-            "-Dspring.datasource.url=${datasourceUrl}",
+//            "-Dspring.datasource.url=${datasourceUrl}",
             "-XX:+UseContainerSupport",
-//            "-XX:+UseG1GC",
-//            "-verbose:gc",
-//            "-XX:+PrintGCDetails",
+            "-XX:+UseG1GC",
+            "-verbose:gc",
+            "-XX:+PrintGCDetails",
             "-Dserver.port=8080",
             "-Dfile.encoding=UTF-8",
         )
 
         // 컨테이너 입장에서 외부로 노출할 포트
-        ports = listOf("8080")
+//        ports = listOf("8080")
 
         labels = mapOf(
             "maintainer" to "chagachagchag.dev@gmail.com"

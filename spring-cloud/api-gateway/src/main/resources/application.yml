@@ -2,9 +2,13 @@ server:
   port: 8000
 
 eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
-    register-with-eureka: true
+    service-url:
+      defaultZone: http://eda-sample-discovery-service:8761/eureka
     fetch-registry: true
+    register-with-eureka: true
 
 spring:
   application:
